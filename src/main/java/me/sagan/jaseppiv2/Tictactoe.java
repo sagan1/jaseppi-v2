@@ -1,21 +1,21 @@
 package me.sagan.jaseppiv2;
 
-import javafx.util.Pair;
 import net.dv8tion.jda.api.entities.Message;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Tictactoe {
 
     public static List<Tictactoe> games = new ArrayList<>();
 
     private Message board;
-    private Pair<Player, Player> players;
+    private Map.Entry<Player, Player> players;
     private String[][] asMatrix = new String[3][3];
     private String turn = "x";
 
-    public Tictactoe(Message board, Pair<Player, Player> players) {
+    public Tictactoe(Message board, Map.Entry<Player, Player> players) {
         this.board = board;
         this.players = players;
 
@@ -29,7 +29,7 @@ public class Tictactoe {
         games.add(this);
     }
 
-    public Pair<Player, Player> getPlayers() {
+    public Map.Entry<Player, Player> getPlayers() {
         return players;
     }
 

@@ -5,8 +5,15 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import javax.security.auth.login.LoginException;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.EnumSet;
 
 public class Jaseppi {
@@ -17,7 +24,7 @@ public class Jaseppi {
     //TODO secure token reading
     public static void main(String[] args) {
         JDABuilder builder = new JDABuilder(AccountType.BOT)
-                .setToken("")
+                .setToken(configGet("token"))
                 .setActivity(Activity.watching("you"))
                 .setDisabledCacheFlags(EnumSet.of(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE))
                 .setBulkDeleteSplittingEnabled(false);
@@ -29,5 +36,22 @@ public class Jaseppi {
         }
 
         jda.addEventListener(new Commands());
+    }
+
+    public static String configGet(String key) {
+
+        JSONParser parser = new JSONParser();
+
+        try {
+            FileReader reader = new FileReader("config.json");
+
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+
+            return (String) jsonObject.get(key);
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

@@ -18,6 +18,8 @@ public class Commands extends ListenerAdapter {
         String[] args = msg.getContentRaw().split(" ");
         args[0] = args[0].substring(1);
 
+        String id = event.getAuthor().getId();
+
         if (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("commands")) {
             send(event.getChannel(), Responses.HELP.getRandom());
         } else if (args[0].equalsIgnoreCase("tictactoe") || args[0].equalsIgnoreCase("ttt")) {
@@ -29,6 +31,9 @@ public class Commands extends ListenerAdapter {
 
             if (args[1].equalsIgnoreCase("exit")) {
                 // make sure to return here
+                if (!Tictactoe.isInGame(id)) return;
+
+
             }
 
             switch (args[1]) {
