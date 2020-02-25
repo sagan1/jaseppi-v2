@@ -1,23 +1,23 @@
 package me.sagan.jaseppiv2;
 
-import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Tictactoe {
 
     public static List<Tictactoe> games = new ArrayList<>();
 
-    private Message board;
-    private Map.Entry<Player, Player> players;
+    private MessageEmbed embed;
+    private Pair players;
     private String[][] asMatrix = new String[3][3];
-    private String turn = "x";
+    private Player turn;
 
-    public Tictactoe(Message board, Map.Entry<Player, Player> players) {
-        this.board = board;
+    public Tictactoe(Pair players) {
         this.players = players;
+        turn = players.getOne();
 
         // Fill all values with numbers
         for (int i = 0; i < 3; i++) {
@@ -27,34 +27,65 @@ public class Tictactoe {
         }
 
         games.add(this);
+
+        EmbedBuilder eb = new EmbedBuilder();
+
+        StringBuilder builder = new StringBuilder();
+        for (String[] arr : asMatrix) {
+            for (String s : arr) {
+                switch (s) {
+                    case "x":
+                        builder.append("U+274C ");
+                        break;
+                    case "o":
+                        builder.append("U+2B55 ");
+                        break;
+                    case " ": case "": default:
+                        builder.append("U+2B1C ");
+                        break;
+                }
+            }
+            builder.append("\n");
+        }
+
+        eb.addField("Tic-Tac-Toe", builder.toString(), false);
+        eb.addBlankField(false);
+        eb.addField("Turn:", turn.getEmoji() + " <@" + turn.getPlayerId() + ">", false);
+        embed = eb.build();
     }
 
-    public Map.Entry<Player, Player> getPlayers() {
+    public MessageEmbed getEmbed() {
+        return embed;
+    }
+
+    public Pair getPlayers() {
         return players;
     }
 
     public static boolean isInGame(String playerId) {
+        return getGame(playerId) != null;
+    }
+
+    public static Tictactoe getGame(String playerId) {
         for (Tictactoe game : games) {
-            if (game.getPlayers().getValue().getPlayerId().equalsIgnoreCase(playerId) ||
-                    game.getPlayers().getKey().getPlayerId().equalsIgnoreCase(playerId)) {
-                return true;
+            if (game.players.contains(playerId)) {
+                return game;
             }
         }
-        return false;
+
+        return null;
     }
 
     public boolean isTurn(Player player) {
-        return this.turn.equalsIgnoreCase(player.getSymbol());
+        return this.turn.getPlayerId().equalsIgnoreCase(player.getPlayerId());
     }
 
     public Player playerFromId(String playerId) {
-        if (playerId.equalsIgnoreCase(players.getKey().getPlayerId())) {
-            return players.getKey();
-        } else if (playerId.equalsIgnoreCase(players.getValue().getPlayerId())) {
-            return players.getValue();
-        } else {
-            return null;
+        if (players.contains(playerId)) {
+            return players.getOne().getPlayerId().equalsIgnoreCase(playerId) ? players.getOne() : players.getTwo();
         }
+
+        return null;
     }
 
     public void updateMatrix(String val, int place) {
@@ -144,16 +175,16 @@ public class Tictactoe {
     }
 
     public static class Player {
-        private String symbol;
+        private String emoji;
         private String playerId;
 
         public Player(String symbol, String playerId) {
-            this.symbol = symbol;
+            this.emoji = symbol;
             this.playerId = playerId;
         }
 
-        public String getSymbol() {
-            return symbol;
+        public String getEmoji() {
+            return emoji;
         }
 
         public String getPlayerId() {

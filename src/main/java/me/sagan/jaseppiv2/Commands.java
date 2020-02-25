@@ -1,13 +1,44 @@
 package me.sagan.jaseppiv2;
 
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.annotation.Nonnull;
 
 public class Commands extends ListenerAdapter {
+
+    @Override
+    public void onGuildMessageReactionAdd(@Nonnull GuildMessageReactionAddEvent event) {
+        if (!Tictactoe.isInGame(event.getUserId())) return;
+
+        Tictactoe game = Tictactoe.getGame(event.getUserId());
+
+        switch (event.getReactionEmote().getAsCodepoints()) {
+            case "U+2196":
+                break;
+            case "U+2B06":
+                break;
+            case "U+2197":
+                break;
+            case "U+2B05":
+                break;
+            case "U+23F9":
+                break;
+            case "U+27A1":
+                break;
+            case "U+2199":
+                break;
+            case "U+2B07":
+                break;
+            case "U+2198":
+                break;
+        }
+    }
 
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
@@ -24,8 +55,29 @@ public class Commands extends ListenerAdapter {
             send(event.getChannel(), Responses.HELP.getRandom());
         } else if (args[0].equalsIgnoreCase("tictactoe") || args[0].equalsIgnoreCase("ttt")) {
 
-            if (args.length != 2) {
+            if (args.length != 2 || msg.getMentionedUsers().size() != 1) {
                 send(event.getChannel(), Responses.TICTACTOE.getRandom());
+                return;
+            }
+
+            User user = msg.getMentionedUsers().get(0);
+
+            if (user != null) {
+                Tictactoe newGame = new Tictactoe(new Pair(new Tictactoe.Player("U+274C", event.getAuthor().getId()),
+                        new Tictactoe.Player("U+2B55", user.getId())));
+
+                event.getChannel().sendMessage(newGame.getEmbed()).queue(message -> {
+                    message.addReaction("U+2196").queue();
+                    message.addReaction("U+2B06").queue();
+                    message.addReaction("U+2197").queue();
+                    message.addReaction("U+2B05").queue();
+                    message.addReaction("U+23F9").queue();
+                    message.addReaction("U+27A1").queue();
+                    message.addReaction("U+2199").queue();
+                    message.addReaction("U+2B07").queue();
+                    message.addReaction("U+2198").queue();
+                });
+
                 return;
             }
 
@@ -33,7 +85,14 @@ public class Commands extends ListenerAdapter {
                 // make sure to return here
                 if (!Tictactoe.isInGame(id)) return;
 
+                Tictactoe game = Tictactoe.getGame(id);
+                send(event.getChannel(), "");
 
+                Tictactoe.games.remove(game);
+
+                send(event.getChannel(), "Game's over, <@" + msg.getAuthor().getId() + "> left like a bitch");
+
+                return;
             }
 
             switch (args[1]) {
