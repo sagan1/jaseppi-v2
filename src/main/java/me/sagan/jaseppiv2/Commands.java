@@ -36,7 +36,7 @@ public class Commands extends ListenerAdapter {
                     int place = Integer.parseInt(args[1]);
 
                     if (Tictactoe.isInGame(event.getAuthor().getId())) {
-                        
+
                     }
 
                     return;

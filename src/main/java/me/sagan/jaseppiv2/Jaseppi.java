@@ -14,9 +14,10 @@ public class Jaseppi {
     public static JDA jda;
     public static String prefix = ".";
 
+    //TODO secure token reading
     public static void main(String[] args) {
         JDABuilder builder = new JDABuilder(AccountType.BOT)
-                .setToken(Secret.TOKEN.get()[0])
+                .setToken("")
                 .setActivity(Activity.watching("you"))
                 .setDisabledCacheFlags(EnumSet.of(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE))
                 .setBulkDeleteSplittingEnabled(false);
