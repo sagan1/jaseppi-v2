@@ -1,4 +1,4 @@
-package me.sagan.jaseppiv2;
+package me.sagan.jaseppi;
 
 public class Pair {
 

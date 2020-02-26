@@ -1,4 +1,4 @@
-package me.sagan.jaseppiv2;
+package me.sagan.jaseppi;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;

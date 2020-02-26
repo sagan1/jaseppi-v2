@@ -1,9 +1,10 @@
-package me.sagan.jaseppiv2;
+package me.sagan.jaseppi;
 
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,7 +20,7 @@ public class Jaseppi {
     public static JDA jda;
     public static String prefix = ".";
 
-    //TODO secure token reading
+
     public static void main(String[] args) {
         JDABuilder builder = new JDABuilder(AccountType.BOT)
                 .setToken(configGet("token"))
@@ -34,6 +35,7 @@ public class Jaseppi {
         }
 
         jda.addEventListener(new Commands());
+        jda.addEventListener(new TTTListener());
     }
 
     public static String configGet(String key) {
@@ -51,5 +53,10 @@ public class Jaseppi {
         }
 
         return null;
+    }
+
+    public static void send(TextChannel channel, String message) {
+        channel.sendTyping().queue();
+        channel.sendMessage(message).queue();
     }
 }
