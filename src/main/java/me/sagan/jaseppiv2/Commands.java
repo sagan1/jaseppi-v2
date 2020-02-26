@@ -105,7 +105,7 @@ public class Commands extends ListenerAdapter {
                 }
 
                 Tictactoe newGame = new Tictactoe(new Pair(new Tictactoe.Player("x", event.getAuthor().getId()),
-                        new Tictactoe.Player("o", user.getId())));
+                        new Tictactoe.Player("o", user.getId())), event.getChannel());
 
                 event.getChannel().sendMessage(newGame.getEmbed()).queue(message -> {
                     message.addReaction("U+2196").queue();

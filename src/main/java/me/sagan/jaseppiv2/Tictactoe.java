@@ -1,7 +1,6 @@
 package me.sagan.jaseppiv2;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 
@@ -18,7 +17,7 @@ public class Tictactoe {
     private String[][] asMatrix = new String[3][3];
     private Player turn;
 
-    public Tictactoe(Pair players) {
+    public Tictactoe(Pair players, TextChannel channel) {
         this.players = players;
         turn = players.getOne();
 
@@ -31,7 +30,7 @@ public class Tictactoe {
 
         games.add(this);
 
-        updateBoard();
+        updateBoard(channel);
     }
 
     public void end(TextChannel channel) {
@@ -44,7 +43,7 @@ public class Tictactoe {
                 this.players.getTwo() : this.players.getOne();
     }
 
-    public void updateBoard() {
+    public void updateBoard(TextChannel channel) {
         EmbedBuilder eb = new EmbedBuilder();
 
         StringBuilder builder = new StringBuilder();
@@ -69,6 +68,10 @@ public class Tictactoe {
         eb.addBlankField(false);
         eb.addField("Turn:", turn.getEmoji() + " <@" + turn.getPlayerId() + ">", true);
         embed = eb.build();
+
+        if (messageId != null) {
+            channel.editMessageById(this.messageId, this.embed).queue();
+        }
     }
 
     public Player getTurn() {
