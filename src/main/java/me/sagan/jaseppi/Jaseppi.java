@@ -35,7 +35,6 @@ public class Jaseppi {
         }
 
         jda.addEventListener(new Commands());
-        jda.addEventListener(new TTTListener());
     }
 
     public static String configGet(String key) {

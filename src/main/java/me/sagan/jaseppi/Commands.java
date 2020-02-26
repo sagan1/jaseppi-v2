@@ -1,5 +1,6 @@
 package me.sagan.jaseppi;
 
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -24,14 +25,18 @@ public class Commands extends ListenerAdapter {
             Jaseppi.send(event.getChannel(), Responses.HELP.getRandom());
         } else if (args[0].equalsIgnoreCase("tictactoe") || args[0].equalsIgnoreCase("ttt")) {
 
-            if (args.length != 2 || msg.getMentionedUsers().size() != 1) {
+            if (args.length != 2) {
                 Jaseppi.send(event.getChannel(), Responses.TICTACTOE.getRandom());
                 return;
             }
 
-            User user = msg.getMentionedUsers().get(0);
+            if (msg.getMentionedUsers().size() == 1) {
+                User user = msg.getMentionedUsers().get(0);
 
-            if (user != null) {
+                if (event.getGuild().getMember(user).getOnlineStatus() != OnlineStatus.ONLINE) {
+                    Jaseppi.send(event.getChannel(), "User not online");
+                    return;
+                }
 
                 if (Tictactoe.isInGame(user.getId())) {
                     Jaseppi.send(event.getChannel(), "they're in a game");
@@ -41,18 +46,7 @@ public class Commands extends ListenerAdapter {
                 Tictactoe newGame = new Tictactoe(new Pair(new Tictactoe.Player("x", event.getAuthor().getId()),
                         new Tictactoe.Player("o", user.getId())), event.getChannel());
 
-                event.getChannel().sendMessage(newGame.getEmbed()).queue(message -> {
-                    message.addReaction("U+2196").queue();
-                    message.addReaction("U+2B06").queue();
-                    message.addReaction("U+2197").queue();
-                    message.addReaction("U+2B05").queue();
-                    message.addReaction("U+23F9").queue();
-                    message.addReaction("U+27A1").queue();
-                    message.addReaction("U+2199").queue();
-                    message.addReaction("U+2B07").queue();
-                    message.addReaction("U+2198").queue();
-                    newGame.setMessageId(message.getId());
-                });
+                event.getChannel().sendMessage(newGame.getEmbed()).queue(message -> newGame.setMessageId(message.getId()));
 
                 return;
             }
@@ -69,7 +63,40 @@ public class Commands extends ListenerAdapter {
                 return;
             }
 
-            // Check if is user, and then if either user is in match, if not; start game.
+            int place;
+
+            try {
+                place = Integer.parseInt(args[1]);
+            } catch (NumberFormatException e) {
+                return;
+            }
+
+            if (!Tictactoe.isInGame(event.getAuthor().getId())) return;
+
+            Tictactoe game = Tictactoe.getGame(event.getAuthor().getId());
+
+            if (!game.isTurn(game.playerFromId(event.getAuthor().getId()))) return;
+
+            if (game.placeTaken(place)) return;
+            game.addTurn(place);
+
+            String won = game.findWin();
+
+            if (won != null) {
+                Tictactoe.Player winner = won.equalsIgnoreCase("x") ? game.getPlayers().getOne() :
+                        game.getPlayers().getTwo();
+                Jaseppi.send(event.getChannel(), "Game's over: <@" + winner.getPlayerId() + "> wins");
+                game.end(event.getChannel());
+                return;
+            } else if (game.findTie()) {
+                Jaseppi.send(event.getChannel(), "Game's over: tie cuz u both suck");
+                game.end(event.getChannel());
+                return;
+            }
+
+            game.switchTurn();
+            game.updateBoard(event.getChannel());
+            event.getMessage().delete().queue();
         }
     }
 }

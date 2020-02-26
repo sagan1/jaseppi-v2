@@ -5,9 +5,24 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Tictactoe {
+
+    public static final String topLeft = "\u2196";
+    public static final String topMiddle = "\u2B06";
+    public static final String topRight = "\u2197";
+    public static final String midLeft = "\u2B05";
+    public static final String mid = "\u23F9";
+    public static final String midRight = "\u27A1";
+    public static final String bottomLeft = "\u2199";
+    public static final String bottomMiddle = "\u2B07";
+    public static final String bottomRight = "\u2198";
+    public static final String blank = "\u2B1C";
+    public static final String x = "\u274C";
+    public static final String o = "\u2B55";
+
 
     public static List<Tictactoe> games = new ArrayList<>();
 
@@ -22,10 +37,8 @@ public class Tictactoe {
         turn = players.getOne();
 
         // Fill all values with numbers
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                asMatrix[i][j] = String.valueOf(coordToPlace(i, j));
-            }
+        for (String[] arr : asMatrix) {
+            Arrays.fill(arr, " ");
         }
 
         games.add(this);
@@ -51,13 +64,13 @@ public class Tictactoe {
             for (String s : arr) {
                 switch (s) {
                     case "x":
-                        builder.append("U+274C ");
+                        builder.append(x);
                         break;
                     case "o":
-                        builder.append("U+2B55 ");
+                        builder.append(o);
                         break;
                     case " ": case "": default:
-                        builder.append("U+2B1C ");
+                        builder.append(blank);
                         break;
                 }
             }
@@ -65,8 +78,8 @@ public class Tictactoe {
         }
 
         eb.addField("Tic-Tac-Toe", builder.toString(), false);
-        eb.addBlankField(false);
         eb.addField("Turn:", turn.getEmoji() + " <@" + turn.getPlayerId() + ">", true);
+        eb.addField("How to:", "Type: '.ttt 1-9' to place a marker", false);
         embed = eb.build();
 
         if (messageId != null) {
@@ -76,16 +89,6 @@ public class Tictactoe {
 
     public Player getTurn() {
         return turn;
-    }
-
-    public static Tictactoe getGameFromMessageId(String messageId) {
-        for (Tictactoe game : games) {
-            if (game.getMessageId().equalsIgnoreCase(messageId)) {
-                return game;
-            }
-        }
-
-        return null;
     }
 
     public String getMessageId() {
@@ -214,8 +217,8 @@ public class Tictactoe {
     }
 
     public static int[] placeToCoord(int place) {
-        int row = place >= 6 ? 2 : (place >= 3 ? 1 : 0);
-        int column = row == 2 ? place - 7 : (row == 1 ? place - 4 : place - 1);
+        int row = place >= 7 ? 2 : (place >= 4 ? 1 : 0);
+        int column = row == 2 ? (place - 7) : (row == 1 ? (place - 4) : (place - 1));
 
         return new int[]{row, column};
     }
@@ -237,7 +240,7 @@ public class Tictactoe {
         private String symbol;
 
         public Player(String symbol, String playerId) {
-            this.emoji = symbol.equalsIgnoreCase("x") ? "U+274C" : "U+2B55";
+            this.emoji = symbol.equalsIgnoreCase("x") ? x : o;
             this.symbol = symbol;
             this.playerId = playerId;
         }

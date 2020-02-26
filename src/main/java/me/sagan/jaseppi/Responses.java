@@ -5,7 +5,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public enum Responses {
 
     HELP("fuck off", ">:(", "imagine being so dumb", "nice 1", "stop", "im not in the mood",
-            "*doesn't even know the commands*", "shut yo goofy ass up", ":|"),
+            "*doesn't even know the commands*", "shut yo goofy ass up", ":|",
+            "<:Pepega:625500652784844800>", "<:UMad:569777577946906624>", "<:Bruh:500917127352549376>"),
     TICTACTOE("you dumb? use like: .tictactoe @person"),
     ;
 
