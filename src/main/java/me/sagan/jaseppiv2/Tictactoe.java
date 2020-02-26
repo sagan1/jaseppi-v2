@@ -11,6 +11,7 @@ public class Tictactoe {
     public static List<Tictactoe> games = new ArrayList<>();
 
     private MessageEmbed embed;
+    private String messageId;
     private Pair players;
     private String[][] asMatrix = new String[3][3];
     private Player turn;
@@ -52,6 +53,24 @@ public class Tictactoe {
         eb.addBlankField(false);
         eb.addField("Turn:", turn.getEmoji() + " <@" + turn.getPlayerId() + ">", false);
         embed = eb.build();
+    }
+
+    public static Tictactoe getGameFromMessageId(String messageId) {
+        for (Tictactoe game : games) {
+            if (game.getMessageId().equalsIgnoreCase(messageId)) {
+                return game;
+            }
+        }
+
+        return null;
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
     public MessageEmbed getEmbed() {
