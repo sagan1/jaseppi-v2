@@ -1,7 +1,6 @@
 package me.sagan.jaseppiv2;
 
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -9,7 +8,6 @@ import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEve
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.annotation.Nonnull;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Commands extends ListenerAdapter {
 
@@ -59,7 +57,22 @@ public class Commands extends ListenerAdapter {
                 break;
         }
 
-        //TODO check if place is taken and if not update board and: check for win, check for tie, switch turn etc
+        if (game.placeTaken(place)) return;
+
+        game.addTurn(place);
+        String won = game.findWin();
+
+        if (won != null) {
+            Tictactoe.Player winner = won.equalsIgnoreCase("x") ? game.getPlayers().getOne() :
+                    game.getPlayers().getTwo();
+            send(event.getChannel(), "Game's over: <@" + winner.getPlayerId() + "> wins");
+            game.end(event.getChannel());
+        } else if (game.findTie()) {
+            send(event.getChannel(), "Game's over: tie cuz u both suck");
+            game.end(event.getChannel());
+        }
+
+        game.switchTurn();
     }
 
     @Override
@@ -85,8 +98,14 @@ public class Commands extends ListenerAdapter {
             User user = msg.getMentionedUsers().get(0);
 
             if (user != null) {
-                Tictactoe newGame = new Tictactoe(new Pair(new Tictactoe.Player("U+274C", event.getAuthor().getId()),
-                        new Tictactoe.Player("U+2B55", user.getId())));
+
+                if (Tictactoe.isInGame(user.getId())) {
+                    send(event.getChannel(), "they're in a game");
+                    return;
+                }
+
+                Tictactoe newGame = new Tictactoe(new Pair(new Tictactoe.Player("x", event.getAuthor().getId()),
+                        new Tictactoe.Player("o", user.getId())));
 
                 event.getChannel().sendMessage(newGame.getEmbed()).queue(message -> {
                     message.addReaction("U+2196").queue();
@@ -109,24 +128,11 @@ public class Commands extends ListenerAdapter {
                 if (!Tictactoe.isInGame(id)) return;
 
                 Tictactoe game = Tictactoe.getGame(id);
-                send(event.getChannel(), "");
-
-                Tictactoe.games.remove(game);
-
                 send(event.getChannel(), "Game's over, <@" + msg.getAuthor().getId() + "> left like a bitch");
 
+                game.end(event.getChannel());
+
                 return;
-            }
-
-            switch (args[1]) {
-                case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9":
-                    int place = Integer.parseInt(args[1]);
-
-                    if (Tictactoe.isInGame(event.getAuthor().getId())) {
-
-                    }
-
-                    return;
             }
 
             // Check if is user, and then if either user is in match, if not; start game.

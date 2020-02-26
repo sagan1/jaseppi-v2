@@ -1,7 +1,9 @@
 package me.sagan.jaseppiv2;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,20 @@ public class Tictactoe {
 
         games.add(this);
 
+        updateBoard();
+    }
+
+    public void end(TextChannel channel) {
+        channel.deleteMessageById(messageId).queue();
+        games.remove(this);
+    }
+
+    public void switchTurn() {
+        this.turn = this.turn.getPlayerId().equalsIgnoreCase(this.players.getOne().getPlayerId()) ?
+                this.players.getTwo() : this.players.getOne();
+    }
+
+    public void updateBoard() {
         EmbedBuilder eb = new EmbedBuilder();
 
         StringBuilder builder = new StringBuilder();
@@ -51,8 +67,12 @@ public class Tictactoe {
 
         eb.addField("Tic-Tac-Toe", builder.toString(), false);
         eb.addBlankField(false);
-        eb.addField("Turn:", turn.getEmoji() + " <@" + turn.getPlayerId() + ">", false);
+        eb.addField("Turn:", turn.getEmoji() + " <@" + turn.getPlayerId() + ">", true);
         embed = eb.build();
+    }
+
+    public Player getTurn() {
+        return turn;
     }
 
     public static Tictactoe getGameFromMessageId(String messageId) {
@@ -107,12 +127,12 @@ public class Tictactoe {
         return null;
     }
 
-    public void updateMatrix(String val, int place) {
-        updateMatrix(val, placeToCoord(place)[0], placeToCoord(place)[1]);
+    public void addTurn(int place) {
+        addTurn(placeToCoord(place)[0], placeToCoord(place)[1]);
     }
 
-    public void updateMatrix(String val, int row, int column) {
-        this.asMatrix[row][column] = val;
+    public void addTurn(int row, int column) {
+        this.asMatrix[row][column] = this.getTurn().getSymbol();
     }
 
     public boolean placeTaken(int place) {
@@ -171,6 +191,21 @@ public class Tictactoe {
         return win;
     }
 
+    public boolean findTie() {
+        boolean tie = true;
+
+        for (String[] arr : asMatrix) {
+            for (String s : arr) {
+                if (s.equalsIgnoreCase(" ") || s.equalsIgnoreCase("")) {
+                    tie = false;
+                    break;
+                }
+            }
+        }
+
+        return tie;
+    }
+
     public static int coordToPlace(int row, int column) {
         return row * 3 + (column + 1);
     }
@@ -196,10 +231,16 @@ public class Tictactoe {
     public static class Player {
         private String emoji;
         private String playerId;
+        private String symbol;
 
         public Player(String symbol, String playerId) {
-            this.emoji = symbol;
+            this.emoji = symbol.equalsIgnoreCase("x") ? "U+274C" : "U+2B55";
+            this.symbol = symbol;
             this.playerId = playerId;
+        }
+
+        public String getSymbol() {
+            return symbol;
         }
 
         public String getEmoji() {
