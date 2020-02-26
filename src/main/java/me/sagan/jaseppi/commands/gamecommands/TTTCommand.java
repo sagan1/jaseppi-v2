@@ -37,8 +37,8 @@ public class TTTCommand extends Command {
             }
 
             Game newGame = new TicTacToe(
-                    new Pair(new Player(author.getId(), "\u274C", "x"),
-                            new Player(mentioned.getId(), "\u2B55", "o")),
+                    new Pair(new Player(author.getId(), TicTacToe.x, "x"),
+                            new Player(mentioned.getId(), TicTacToe.o, "o")),
                     channel,
                     GameType.TICTACTOE);
 

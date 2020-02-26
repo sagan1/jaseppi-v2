@@ -46,6 +46,10 @@ public abstract class Game {
         return true;
     }
 
+    public boolean placeTaken(int row, int col) {
+        return true;
+    }
+
     public void end() {
         channel.deleteMessageById(messageId).queue();
         games.remove(this);
