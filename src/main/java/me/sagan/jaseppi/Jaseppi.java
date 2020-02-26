@@ -1,5 +1,8 @@
 package me.sagan.jaseppi;
 
+import me.sagan.jaseppi.commands.CommandHandler;
+import me.sagan.jaseppi.commands.CommandRegistry;
+import me.sagan.jaseppi.commands.gamecommands.TTTCommand;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -20,7 +23,6 @@ public class Jaseppi {
     public static JDA jda;
     public static String prefix = ".";
 
-
     public static void main(String[] args) {
         JDABuilder builder = new JDABuilder(AccountType.BOT)
                 .setToken(configGet("token"))
@@ -34,7 +36,9 @@ public class Jaseppi {
             e.printStackTrace();
         }
 
-        jda.addEventListener(new Commands());
+        jda.addEventListener(new CommandHandler());
+
+        CommandRegistry.register(new TTTCommand());
     }
 
     public static String configGet(String key) {
