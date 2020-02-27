@@ -13,9 +13,8 @@ public class CommandHandler extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
         Message msg = event.getMessage();
-        String pre = msg.getContentRaw().substring(1);
 
-        if (!pre.equalsIgnoreCase(Jaseppi.prefix)) return;
+        if (!String.valueOf(msg.getContentRaw().charAt(0)).equalsIgnoreCase(Jaseppi.prefix)) return;
 
         String[] argsRaw = msg.getContentRaw().substring(1).split(" ");
         String cmd = argsRaw[0];

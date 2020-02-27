@@ -7,22 +7,20 @@ import me.sagan.jaseppi.game.Pair;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-import java.util.Arrays;
-
 public class TicTacToe extends Game {
 
     public static final String blank = "\u2B1C";
     public static final String x = "\u274C";
     public static final String o = "\u2B55";
 
-    private String[][] asMatrix = new String[3][3];
+    private String[][] asMatrix = {
+            {" ", " ", " "},
+            {" ", " ", " "},
+            {" ", " ", " "}
+    };
 
     public TicTacToe(Pair players, TextChannel channel, GameType type) {
         super(players, channel, type);
-
-        for (String[] arr : asMatrix) {
-            Arrays.fill(arr, " ");
-        }
     }
 
     @Override
@@ -30,7 +28,7 @@ public class TicTacToe extends Game {
         EmbedBuilder eb = new EmbedBuilder();
 
         StringBuilder builder = new StringBuilder();
-        for (String[] arr : asMatrix) {
+        for (String[] arr : this.asMatrix) {
             for (String s : arr) {
                 switch (s) {
                     case "x":

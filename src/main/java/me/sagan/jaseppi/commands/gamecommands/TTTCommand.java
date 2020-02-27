@@ -16,7 +16,7 @@ import net.dv8tion.jda.api.entities.User;
 public class TTTCommand extends Command {
 
     public TTTCommand() {
-        super("tictactoe", 1, 1, ".ttt <1-9, exit, @player>", "ttt");
+        super("tictactoe", 1, 1, "`.ttt <1-9, exit, @player>`", "ttt");
     }
 
     @Override

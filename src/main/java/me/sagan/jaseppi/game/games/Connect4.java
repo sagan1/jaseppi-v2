@@ -14,14 +14,17 @@ public class Connect4 extends Game {
     public static final String red = "\uD83D\uDFE5";
     public static final String blue = "\uD83D\uDFE6";
 
-    public String[][] asMatrix = new String[6][7];
+    public String[][] asMatrix = {
+            {" ", " ", " ", " ", " ", " ", " "},
+            {" ", " ", " ", " ", " ", " ", " "},
+            {" ", " ", " ", " ", " ", " ", " "},
+            {" ", " ", " ", " ", " ", " ", " "},
+            {" ", " ", " ", " ", " ", " ", " "},
+            {" ", " ", " ", " ", " ", " ", " "},
+    };
 
     public Connect4(Pair players, TextChannel channel, GameType type) {
         super(players, channel, type);
-
-        for (String[] arr : asMatrix) {
-            Arrays.fill(arr, " ");
-        }
     }
 
     @Override

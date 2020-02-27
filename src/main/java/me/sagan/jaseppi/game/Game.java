@@ -26,9 +26,9 @@ public abstract class Game {
         this.players.getOne().setGameIn(this);
         this.players.getTwo().setGameIn(this);
 
-        games.add(this);
-
         initializeEmbed();
+
+        games.add(this);
     }
 
     public abstract void initializeEmbed();
