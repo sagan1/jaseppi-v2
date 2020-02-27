@@ -42,6 +42,11 @@ public class C4Command extends Command {
                 return;
             }
 
+            if (Player.isInGame(author.getId())) {
+                Jaseppi.send(channel, "bitch, finish the game you're in");
+                return;
+            }
+
             Game newGame = Connect4.createGame(
                     new Pair(new Player(author.getId(), Connect4.red, "r"),
                             new Player(mentioned.getId(), Connect4.blue, "b")),

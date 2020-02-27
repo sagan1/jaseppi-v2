@@ -41,6 +41,11 @@ public class TTTCommand extends Command {
                 return;
             }
 
+            if (Player.isInGame(author.getId())) {
+                Jaseppi.send(channel, "bitch, finish the game you're in");
+                return;
+            }
+
             Game newGame = TicTacToe.createGame(
                     new Pair(new Player(author.getId(), TicTacToe.x, "x"),
                             new Player(mentioned.getId(), TicTacToe.o, "o")),
