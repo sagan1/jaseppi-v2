@@ -6,8 +6,6 @@ import me.sagan.jaseppi.game.Pair;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-import java.util.Arrays;
-
 public class Connect4 extends Game {
 
     public static final String blank = "\u2B1C";
@@ -23,6 +21,12 @@ public class Connect4 extends Game {
             {" ", " ", " ", " ", " ", " ", " "},
     };
 
+    public static Connect4 createGame(Pair players, TextChannel channel, GameType type) {
+        Connect4 connect4 = new Connect4(players, channel, type);
+        connect4.initializeEmbed();
+        return connect4;
+    }
+
     public Connect4(Pair players, TextChannel channel, GameType type) {
         super(players, channel, type);
     }
@@ -31,7 +35,14 @@ public class Connect4 extends Game {
     public void initializeEmbed() {
         EmbedBuilder eb = new EmbedBuilder();
 
-        StringBuilder builder = new StringBuilder(" 1 2 3 4 5 6 7\n");
+        StringBuilder builder = new StringBuilder("\u0031\uFE0F\u20E3" +
+                "\u0032\uFE0F\u20E3" +
+                "\u0033\uFE0F\u20E3" +
+                "\u0034\uFE0F\u20E3" +
+                "\u0035\uFE0F\u20E3" +
+                "\u0036\uFE0F\u20E3" +
+                "\u0037\uFE0F\u20E3" +
+                "\n");
 
         for (String[] arr : asMatrix) {
             for (String s : arr) {
@@ -50,9 +61,9 @@ public class Connect4 extends Game {
             builder.append("\n");
         }
 
-        eb.addField("Tic-Tac-Toe", builder.toString(), false);
+        eb.addField("Connect4", builder.toString(), false);
         eb.addField("Turn:", super.getTurn().getEmoji() + " <@" + super.getTurn().getUserId() + ">", true);
-        eb.addField("How to:", "Type: '.c4 1-7' to place a marker", false);
+        eb.addField("How to:", "`.c4 1-7` to place a marker\n`.c4 exit` to leave", false);
         super.setEmbed(eb.build());
     }
 
@@ -72,11 +83,17 @@ public class Connect4 extends Game {
     }
 
     @Override
+    public boolean placeTaken(int place) {
+        return true;
+    }
+
+    @Override
     public void addTurn(int place) {
         int rowCheck = 0;
 
         while (!placeTaken(rowCheck + 1, place)) {
             rowCheck++;
+            if (rowCheck == 5) break;
         }
 
         asMatrix[rowCheck][place] = super.getTurn().getTextBasedSymbol();

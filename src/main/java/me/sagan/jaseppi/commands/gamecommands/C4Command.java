@@ -27,6 +27,11 @@ public class C4Command extends Command {
 
             User mentioned = message.getMentionedUsers().get(0);
 
+            if (mentioned.isBot()) {
+                Jaseppi.send(channel, "bitch u cant play with me");
+                return;
+            }
+
             if (message.getGuild().getMember(mentioned).getOnlineStatus() != OnlineStatus.ONLINE) {
                 Jaseppi.send(channel, "User is not online or does not want to play");
                 return;
@@ -37,7 +42,7 @@ public class C4Command extends Command {
                 return;
             }
 
-            Game newGame = new Connect4(
+            Game newGame = Connect4.createGame(
                     new Pair(new Player(author.getId(), Connect4.red, "r"),
                             new Player(mentioned.getId(), Connect4.blue, "b")),
                     channel,
@@ -66,12 +71,12 @@ public class C4Command extends Command {
 
         if (!Player.isInGame(author.getId())) return;
 
-        Game game = TicTacToe.getGame(author.getId());
+        Game game = Connect4.getGame(author.getId());
 
         if (!game.isTurn(author.getId())) return;
-        if (game.placeTaken(place)) return;
+        if (game.placeTaken(0, place - 1)) return;
 
-        game.addTurn(place);
+        game.addTurn(place-1);
 
         String won = game.findWin();
 

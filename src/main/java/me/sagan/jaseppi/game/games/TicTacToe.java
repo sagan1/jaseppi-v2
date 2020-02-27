@@ -19,7 +19,13 @@ public class TicTacToe extends Game {
             {" ", " ", " "}
     };
 
-    public TicTacToe(Pair players, TextChannel channel, GameType type) {
+    public static TicTacToe createGame(Pair players, TextChannel channel, GameType type) {
+        TicTacToe ticTacToe = new TicTacToe(players, channel, type);
+        ticTacToe.initializeEmbed();
+        return ticTacToe;
+    }
+
+    private TicTacToe(Pair players, TextChannel channel, GameType type) {
         super(players, channel, type);
     }
 
@@ -47,7 +53,7 @@ public class TicTacToe extends Game {
 
         eb.addField("Tic-Tac-Toe", builder.toString(), false);
         eb.addField("Turn:", super.getTurn().getEmoji() + " <@" + super.getTurn().getUserId() + ">", true);
-        eb.addField("How to:", "Type: '.ttt 1-9' to place a marker", false);
+        eb.addField("How to:", "`.ttt 1-9` to place a marker \n`.ttt exit` to leave", false);
         super.setEmbed(eb.build());
     }
 
@@ -142,6 +148,7 @@ public class TicTacToe extends Game {
         return placeTaken(placeToCoord(place)[0], placeToCoord(place)[1]);
     }
 
+    @Override
     public boolean placeTaken(int row, int column) {
         return asMatrix[row][column].equalsIgnoreCase("o") ||
                 asMatrix[row][column].equalsIgnoreCase("x");

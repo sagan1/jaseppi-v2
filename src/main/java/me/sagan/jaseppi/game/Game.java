@@ -17,7 +17,7 @@ public abstract class Game {
     private TextChannel channel;
     private GameType type;
 
-    public Game(Pair players, TextChannel channel, GameType type) {
+    protected Game(Pair players, TextChannel channel, GameType type) {
         this.players = players;
         this.channel = channel;
         this.type = type;
@@ -25,8 +25,6 @@ public abstract class Game {
         this.turn = players.getOne();
         this.players.getOne().setGameIn(this);
         this.players.getTwo().setGameIn(this);
-
-        initializeEmbed();
 
         games.add(this);
     }
@@ -36,18 +34,12 @@ public abstract class Game {
     public abstract void addTurn(int place);
     public abstract String findWin();
     public abstract boolean findTie();
+    public abstract boolean placeTaken(int place);
+    public abstract boolean placeTaken(int row, int col);
 
     public void switchTurn() {
         this.turn = this.turn.getUserId().equalsIgnoreCase(this.players.getOne().getUserId()) ?
                 this.players.getTwo() : this.players.getOne();
-    }
-
-    public boolean placeTaken(int place) {
-        return true;
-    }
-
-    public boolean placeTaken(int row, int col) {
-        return true;
     }
 
     public void end() {

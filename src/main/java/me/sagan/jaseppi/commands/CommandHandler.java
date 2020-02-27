@@ -14,6 +14,8 @@ public class CommandHandler extends ListenerAdapter {
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
         Message msg = event.getMessage();
 
+        if (msg.getAuthor().isBot()) return;
+
         if (!String.valueOf(msg.getContentRaw().charAt(0)).equalsIgnoreCase(Jaseppi.prefix)) return;
 
         String[] argsRaw = msg.getContentRaw().substring(1).split(" ");

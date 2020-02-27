@@ -26,6 +26,11 @@ public class TTTCommand extends Command {
 
             User mentioned = message.getMentionedUsers().get(0);
 
+            if (mentioned.isBot()) {
+                Jaseppi.send(channel, "bitch u cant play with me");
+                return;
+            }
+
             if (message.getGuild().getMember(mentioned).getOnlineStatus() != OnlineStatus.ONLINE) {
                 Jaseppi.send(channel, "User is not online or does not want to play");
                 return;
@@ -36,7 +41,7 @@ public class TTTCommand extends Command {
                 return;
             }
 
-            Game newGame = new TicTacToe(
+            Game newGame = TicTacToe.createGame(
                     new Pair(new Player(author.getId(), TicTacToe.x, "x"),
                             new Player(mentioned.getId(), TicTacToe.o, "o")),
                     channel,
