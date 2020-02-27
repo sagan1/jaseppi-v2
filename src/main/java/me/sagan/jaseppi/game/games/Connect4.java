@@ -72,17 +72,50 @@ public class Connect4 extends Game {
     @Override
     public void addTurn(int place) {
         int rowCheck = 0;
-        int columnCheck = place;
 
-        while (!placeTaken(rowCheck + 1, columnCheck)) {
+        while (!placeTaken(rowCheck + 1, place)) {
             rowCheck++;
         }
 
-        asMatrix[rowCheck][columnCheck] = super.getTurn().getTextBasedSymbol();
+        asMatrix[rowCheck][place] = super.getTurn().getTextBasedSymbol();
     }
 
     @Override
     public String findWin() {
+
+        int[][] directions = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
+
+        for (int[] direction : directions) {
+
+            int dx = direction[0];
+            int dy = direction[1];
+
+            for (int y = 0; y < asMatrix.length; y++) {
+                for (int x = 0; x < asMatrix[y].length; x++) {
+                    // y = row  x = col
+                    int furthestX = x + 3*dx;
+                    int furthestY = y + 3*dy;
+
+                    if (furthestX < 0 || furthestX > 6 || furthestY < 0 || furthestY > 5) continue;
+                    if (!placeTaken(y, x)) continue;
+
+                    int[][] toCheck = {{x + dx, y + dy}, {x + 2*dx, y + 2*dy}, {furthestX, furthestY}};
+                    String toCompare = asMatrix[y][x];
+
+                    boolean won = true;
+
+                    for (int[] ints : toCheck) {
+                        if (!asMatrix[ints[1]][ints[0]].equalsIgnoreCase(toCompare)) {
+                            won = false;
+                            break;
+                        }
+                    }
+
+                    if (won) return toCompare;
+                }
+            }
+        }
+
         return null;
     }
 
