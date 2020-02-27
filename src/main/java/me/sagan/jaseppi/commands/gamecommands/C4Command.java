@@ -8,6 +8,7 @@ import me.sagan.jaseppi.game.Pair;
 import me.sagan.jaseppi.game.Player;
 import me.sagan.jaseppi.game.games.Connect4;
 import me.sagan.jaseppi.game.games.TicTacToe;
+import me.sagan.jaseppi.game.statistic.StatisticManager;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -62,7 +63,7 @@ public class C4Command extends Command {
 
             Game game = Game.getGame(author.getId());
             Jaseppi.send(channel, "Game's over, <@" + author.getId() + "> left like a bitch");
-            game.end();
+            game.end(new StatisticManager.Statistic(GameType.TICTACTOE, author.getId(), 0, 0, 1));
             return;
         }
 
@@ -89,7 +90,11 @@ public class C4Command extends Command {
             Player winner = won.equalsIgnoreCase(game.getPlayers().getOne().getTextBasedSymbol()) ?
                     game.getPlayers().getOne() : game.getPlayers().getTwo();
             Jaseppi.send(channel, "Game's over: <@" + winner.getUserId() + "> wins");
-            game.end();
+            game.end(new StatisticManager.Statistic(GameType.TICTACTOE, game.getTurn().getUserId(), 1, 0, 0),
+                    new StatisticManager.Statistic(GameType.TICTACTOE,
+                            game.getTurn().getUserId().equalsIgnoreCase(game.getPlayers().getOne().getUserId()) ?
+                                    game.getPlayers().getTwo().getUserId() : game.getPlayers().getTwo().getUserId(),
+                            0, 1, 0));
             return;
         } else if (game.findTie()) {
             Jaseppi.send(channel, "Game's over: tie cuz u both suck");

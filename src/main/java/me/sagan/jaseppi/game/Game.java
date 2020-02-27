@@ -1,5 +1,6 @@
 package me.sagan.jaseppi.game;
 
+import me.sagan.jaseppi.game.statistic.StatisticManager;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 
@@ -42,7 +43,7 @@ public abstract class Game {
                 this.players.getTwo() : this.players.getOne();
     }
 
-    public void end() {
+    public void end(StatisticManager.Statistic... stats) {
         channel.deleteMessageById(messageId).queue();
         games.remove(this);
     }

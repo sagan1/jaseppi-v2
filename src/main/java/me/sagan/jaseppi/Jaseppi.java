@@ -4,7 +4,7 @@ import me.sagan.jaseppi.commands.CommandHandler;
 import me.sagan.jaseppi.commands.CommandRegistry;
 import me.sagan.jaseppi.commands.gamecommands.C4Command;
 import me.sagan.jaseppi.commands.gamecommands.TTTCommand;
-import me.sagan.jaseppi.game.statistic.Statistic;
+import me.sagan.jaseppi.game.statistic.StatisticManager;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -43,7 +43,7 @@ public class Jaseppi {
         CommandRegistry.register(new TTTCommand());
         CommandRegistry.register(new C4Command());
 
-        Statistic.initialize();
+        StatisticManager.initialize();
     }
 
     public static String configGet(String key) {
