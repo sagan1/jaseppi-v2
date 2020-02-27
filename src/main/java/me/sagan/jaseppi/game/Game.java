@@ -44,6 +44,7 @@ public abstract class Game {
     }
 
     public void end(StatisticManager.Statistic... stats) {
+        StatisticManager.update(stats);
         channel.deleteMessageById(messageId).queue();
         games.remove(this);
     }

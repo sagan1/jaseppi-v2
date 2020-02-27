@@ -27,8 +27,15 @@ public class StatisticManager {
         }
         embed = eb.build();
 
-        channel = Jaseppi.jda.getTextChannelById("682451917376323607");
-        channel.sendMessage(embed).queue();
+        try {
+            channel = Jaseppi.jda.awaitReady().getTextChannelById("682451917376323607");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (!channel.hasLatestMessage()) {
+            channel.sendMessage(embed).queue();
+        }
     }
 
     public static void update(Statistic... statistics) {
