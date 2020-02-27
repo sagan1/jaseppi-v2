@@ -64,7 +64,7 @@ public class TTTCommand extends Command {
             return;
         }
 
-        if (Player.isInGame(author.getId())) return;
+        if (!Player.isInGame(author.getId())) return;
 
         Game game = TicTacToe.getGame(author.getId());
 
@@ -76,8 +76,8 @@ public class TTTCommand extends Command {
         String won = game.findWin();
 
         if (won != null) {
-            Player winner = won.equalsIgnoreCase("x") ? game.getPlayers().getOne() :
-                    game.getPlayers().getTwo();
+            Player winner = won.equalsIgnoreCase(game.getPlayers().getOne().getTextBasedSymbol()) ?
+                    game.getPlayers().getOne() : game.getPlayers().getTwo();
             Jaseppi.send(channel, "Game's over: <@" + winner.getUserId() + "> wins");
             game.end();
             return;

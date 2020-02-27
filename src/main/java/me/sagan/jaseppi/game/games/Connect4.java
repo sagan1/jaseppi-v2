@@ -68,7 +68,6 @@ public class Connect4 extends Game {
                 asMatrix[row][col].equalsIgnoreCase(super.getPlayers().getTwo().getTextBasedSymbol());
     }
 
-    //TODO make sure to check if the very top space is taken in commands
     @Override
     public void addTurn(int place) {
         int rowCheck = 0;

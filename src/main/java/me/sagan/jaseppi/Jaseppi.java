@@ -2,6 +2,7 @@ package me.sagan.jaseppi;
 
 import me.sagan.jaseppi.commands.CommandHandler;
 import me.sagan.jaseppi.commands.CommandRegistry;
+import me.sagan.jaseppi.commands.gamecommands.C4Command;
 import me.sagan.jaseppi.commands.gamecommands.TTTCommand;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
@@ -39,6 +40,7 @@ public class Jaseppi {
         jda.addEventListener(new CommandHandler());
 
         CommandRegistry.register(new TTTCommand());
+        CommandRegistry.register(new C4Command());
     }
 
     public static String configGet(String key) {
