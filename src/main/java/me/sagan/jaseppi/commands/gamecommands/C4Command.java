@@ -28,6 +28,11 @@ public class C4Command extends Command {
 
             User mentioned = message.getMentionedUsers().get(0);
 
+            if (mentioned.getId().equalsIgnoreCase(author.getId())) {
+                Jaseppi.send(channel, "imagine being so lonely that u wanna play c4 with yourself");
+                return;
+            }
+
             if (mentioned.isBot()) {
                 Jaseppi.send(channel, "bitch u cant play with me");
                 return;
@@ -63,7 +68,7 @@ public class C4Command extends Command {
 
             Game game = Game.getGame(author.getId());
             Jaseppi.send(channel, "Game's over, <@" + author.getId() + "> left like a bitch");
-            game.end(new StatisticManager.Statistic(GameType.TICTACTOE, author.getId(), 0, 0, 1));
+            game.end(new StatisticManager.Statistic(GameType.CONNECT4, author.getId(), 0, 0, 1));
             return;
         }
 
@@ -90,8 +95,8 @@ public class C4Command extends Command {
             Player winner = won.equalsIgnoreCase(game.getPlayers().getOne().getTextBasedSymbol()) ?
                     game.getPlayers().getOne() : game.getPlayers().getTwo();
             Jaseppi.send(channel, "Game's over: <@" + winner.getUserId() + "> wins");
-            game.end(new StatisticManager.Statistic(GameType.TICTACTOE, game.getTurn().getUserId(), 1, 0, 0),
-                    new StatisticManager.Statistic(GameType.TICTACTOE,
+            game.end(new StatisticManager.Statistic(GameType.CONNECT4, game.getTurn().getUserId(), 1, 0, 0),
+                    new StatisticManager.Statistic(GameType.CONNECT4,
                             game.getTurn().getUserId().equalsIgnoreCase(game.getPlayers().getOne().getUserId()) ?
                                     game.getPlayers().getTwo().getUserId() : game.getPlayers().getTwo().getUserId(),
                             0, 1, 0));

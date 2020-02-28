@@ -27,6 +27,11 @@ public class TTTCommand extends Command {
 
             User mentioned = message.getMentionedUsers().get(0);
 
+            if (mentioned.getId().equalsIgnoreCase(author.getId())) {
+                Jaseppi.send(channel, "imagine being so lonely that u wanna play ttt with yourself");
+                return;
+            }
+
             if (mentioned.isBot()) {
                 Jaseppi.send(channel, "bitch u cant play with me");
                 return;
