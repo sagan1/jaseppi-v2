@@ -80,6 +80,8 @@ public class TTTCommand extends Command {
             return;
         }
 
+        if (place > 9) return;
+
         if (!Player.isInGame(author.getId())) return;
 
         Game game = TicTacToe.getGame(author.getId());

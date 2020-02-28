@@ -80,6 +80,8 @@ public class C4Command extends Command {
             return;
         }
 
+        if (place > 7) return;
+
         if (!Player.isInGame(author.getId())) return;
 
         Game game = Connect4.getGame(author.getId());
