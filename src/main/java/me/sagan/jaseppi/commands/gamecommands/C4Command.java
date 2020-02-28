@@ -7,7 +7,6 @@ import me.sagan.jaseppi.game.GameType;
 import me.sagan.jaseppi.game.Pair;
 import me.sagan.jaseppi.game.Player;
 import me.sagan.jaseppi.game.games.Connect4;
-import me.sagan.jaseppi.game.games.TicTacToe;
 import me.sagan.jaseppi.game.statistic.StatisticManager;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Member;

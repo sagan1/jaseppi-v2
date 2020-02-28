@@ -1,7 +1,10 @@
 package me.sagan.jaseppi;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import me.sagan.jaseppi.commands.CommandHandler;
 import me.sagan.jaseppi.commands.CommandRegistry;
+import me.sagan.jaseppi.commands.functioncommands.WeatherCommand;
 import me.sagan.jaseppi.commands.gamecommands.C4Command;
 import me.sagan.jaseppi.commands.gamecommands.TTTCommand;
 import me.sagan.jaseppi.game.statistic.StatisticManager;
@@ -11,12 +14,9 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import javax.security.auth.login.LoginException;
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.EnumSet;
 
@@ -24,6 +24,7 @@ public class Jaseppi {
 
     public static JDA jda;
     public static String prefix = ".";
+    private static final File config = new File("config.json");
 
     public static void main(String[] args) {
         JDABuilder builder = new JDABuilder(AccountType.BOT)
@@ -42,21 +43,26 @@ public class Jaseppi {
 
         CommandRegistry.register(new TTTCommand());
         CommandRegistry.register(new C4Command());
+        CommandRegistry.register(new WeatherCommand());
 
         StatisticManager.initialize();
     }
 
-    public static String configGet(String key) {
+    public static String configGet(String path) {
 
-        JSONParser parser = new JSONParser();
+        ObjectMapper mapper = new ObjectMapper();
+
+        String[] paths = path.contains(".") ? path.split(".") : new String[]{path};
 
         try {
-            FileReader reader = new FileReader("config.json");
+            JsonNode locatedNode = mapper.readTree(config);
 
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+            for (String p : paths) {
+                locatedNode = locatedNode.path(p);
+            }
 
-            return (String) jsonObject.get(key);
-        } catch (IOException | ParseException e) {
+            return locatedNode.asText();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
