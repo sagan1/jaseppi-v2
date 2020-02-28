@@ -15,6 +15,7 @@ public abstract class Command {
 
     protected Command(String cmd, int minArgs, int maxArgs, String usage, String... aliases) {
         this.cmd = cmd;
+        this.usage = usage;
         this.aliases = aliases;
         this.maxArgs = maxArgs;
         this.minArgs = minArgs;
