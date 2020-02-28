@@ -98,7 +98,7 @@ public class C4Command extends Command {
             game.end(new StatisticManager.Statistic(GameType.CONNECT4, game.getTurn().getUserId(), 1, 0, 0),
                     new StatisticManager.Statistic(GameType.CONNECT4,
                             game.getTurn().getUserId().equalsIgnoreCase(game.getPlayers().getOne().getUserId()) ?
-                                    game.getPlayers().getTwo().getUserId() : game.getPlayers().getTwo().getUserId(),
+                                    game.getPlayers().getTwo().getUserId() : game.getPlayers().getOne().getUserId(),
                             0, 1, 0));
             return;
         } else if (game.findTie()) {
