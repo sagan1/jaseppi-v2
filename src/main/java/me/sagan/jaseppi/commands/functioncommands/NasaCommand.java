@@ -39,6 +39,7 @@ public class NasaCommand extends Command {
             int randomizer = ThreadLocalRandom.current().nextInt(0, 5);
 
             String firstHref = Util.jsonGet("href", items[randomizer].toString());
+            System.out.println(firstHref);
             String data = Util.jsonGetObjArray("data", items[randomizer].toString())[0].toString();
             title = Util.jsonGet("title", data);
             explanation = Util.jsonGet("description", data);
@@ -46,7 +47,7 @@ public class NasaCommand extends Command {
             String picsJson = Util.jsonGrab(firstHref);
             String[] pics = Util.jsonGetArray("null", picsJson);
 
-            url = pics[2];
+            url = pics[0];
         } else {
             String json = Util.jsonGrab("https://api.nasa.gov/planetary/apod?api_key=" + key);
 
