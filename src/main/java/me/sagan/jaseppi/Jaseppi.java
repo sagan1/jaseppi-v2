@@ -2,6 +2,7 @@ package me.sagan.jaseppi;
 
 import me.sagan.jaseppi.commands.CommandHandler;
 import me.sagan.jaseppi.commands.CommandRegistry;
+import me.sagan.jaseppi.commands.functioncommands.NasaCommand;
 import me.sagan.jaseppi.commands.functioncommands.WeatherCommand;
 import me.sagan.jaseppi.commands.gamecommands.C4Command;
 import me.sagan.jaseppi.commands.gamecommands.TTTCommand;
@@ -21,7 +22,7 @@ public class Jaseppi {
 
     public static JDA jda;
     public static String prefix = ".";
-    private static final File config = new File("config.json");
+    public static final File config = new File("config.json");
 
     public static void main(String[] args) {
         JDABuilder builder = new JDABuilder(AccountType.BOT)
@@ -41,6 +42,7 @@ public class Jaseppi {
         CommandRegistry.register(new TTTCommand());
         CommandRegistry.register(new C4Command());
         CommandRegistry.register(new WeatherCommand());
+        CommandRegistry.register(new NasaCommand());
 
         StatisticManager.initialize();
     }

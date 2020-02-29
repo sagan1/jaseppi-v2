@@ -69,7 +69,7 @@ public abstract class Command {
             if (command.getCmd().equalsIgnoreCase(cmd) || command.hasAlias(cmd)) {
 
                 if (args.length < command.minArgs || args.length > command.maxArgs) {
-                    Jaseppi.send(channel, command.usage);
+                    Jaseppi.send(channel, "You typed it wrong, follow this: " + command.usage);
                     return;
                 }
 

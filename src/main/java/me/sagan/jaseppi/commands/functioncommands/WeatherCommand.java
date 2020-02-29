@@ -1,21 +1,18 @@
 package me.sagan.jaseppi.commands.functioncommands;
 
+import me.sagan.jaseppi.Jaseppi;
 import me.sagan.jaseppi.Util;
 import me.sagan.jaseppi.commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 import java.awt.*;
-import java.io.IOException;
 
 public class WeatherCommand extends Command {
 
-    private OkHttpClient client = new OkHttpClient();
-    private final String appid = "deb50cd547a7f29d5f5a32979b03ae5f";
+    private final String appid = Util.jsonGet("weather_key", Jaseppi.config);
 
     public WeatherCommand() {
         super("weather", 0, 1, "`.weather (city=Kelowna,CA)`", "w");
@@ -26,18 +23,8 @@ public class WeatherCommand extends Command {
 
         String city = args.length == 1 ? args[0] : "Kelowna,CA";
 
-        Request request = new Request.Builder()
-                .url("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + appid + "&units=metric")
-                .build();
-
-        String json;
-
-        try {
-            json = client.newCall(request).execute().body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
+        String json = Util.jsonGrab("http://api.openweathermap.org/data/2.5/weather?q=" + city +
+                "&appid=" + appid + "&units=metric");
 
         String temp = Util.jsonGet("main.temp", json);
         String feelsLike = Util.jsonGet("main.feels_like", json);
