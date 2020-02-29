@@ -5,6 +5,8 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
+import java.util.Arrays;
+
 public abstract class Command {
 
     private String cmd;
@@ -12,16 +14,22 @@ public abstract class Command {
     private String[] aliases;
     private int minArgs;
     private int maxArgs;
+    private boolean concatArgs;
 
-    protected Command(String cmd, int minArgs, int maxArgs, String usage, String... aliases) {
+    protected Command(String cmd, int minArgs, int maxArgs, boolean concatArgs, String usage, String... aliases) {
         this.cmd = cmd;
         this.usage = usage;
         this.aliases = aliases;
         this.maxArgs = maxArgs;
         this.minArgs = minArgs;
+        this.concatArgs = concatArgs;
     }
 
     public abstract void handle(Message message, Member author, TextChannel channel, String[] args);
+
+    public boolean concatArgs() {
+        return concatArgs;
+    }
 
     public String getCmd() {
         return cmd;
@@ -68,7 +76,11 @@ public abstract class Command {
         CommandRegistry.commands.forEach(command -> {
             if (command.getCmd().equalsIgnoreCase(cmd) || command.hasAlias(cmd)) {
 
-                if (args.length < command.minArgs || args.length > command.maxArgs) {
+                if (command.concatArgs()) {
+                    String[] concatArgs = new String[]{String.join(" ", args)};
+                    command.handle(message, author, channel, command.concatArgs() ? concatArgs : args);
+                    return;
+                } else if (args.length < command.minArgs || args.length > command.maxArgs) {
                     Jaseppi.send(channel, "You typed it wrong, follow this: " + command.usage);
                     return;
                 }

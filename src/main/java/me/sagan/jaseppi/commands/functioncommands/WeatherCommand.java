@@ -15,13 +15,13 @@ public class WeatherCommand extends Command {
     private final String appid = Util.jsonGet("weather_key", Jaseppi.config);
 
     public WeatherCommand() {
-        super("weather", 0, 1, "`.weather (city=Kelowna,CA)`", "w");
+        super("weather", 0, 1, false, "`.weather (city=Kelowna,CA)`", "w");
     }
 
     @Override
     public void handle(Message message, Member author, TextChannel channel, String[] args) {
 
-        String city = args.length == 1 ? args[0] : "Kelowna,CA";
+        String city = args.length == 1 ? args[0].replaceAll("\\s+", "") : "Kelowna,CA";
 
         String json = Util.jsonGrab("http://api.openweathermap.org/data/2.5/weather?q=" + city +
                 "&appid=" + appid + "&units=metric");

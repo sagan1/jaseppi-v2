@@ -17,7 +17,7 @@ import net.dv8tion.jda.api.entities.User;
 public class C4Command extends Command {
 
     public C4Command() {
-        super("c4", 1, 1, "`.c4 <1-7, exit, @player>`", "connect4");
+        super("c4", 1, 1, false, "`.c4 <1-7, exit, @player>`", "connect4");
     }
 
     @Override

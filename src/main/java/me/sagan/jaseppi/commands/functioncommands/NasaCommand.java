@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class NasaCommand extends Command {
@@ -18,7 +17,7 @@ public class NasaCommand extends Command {
     private final String key = Util.jsonGet("nasa_key", Jaseppi.config);
 
     public NasaCommand() {
-        super("nasa", 0, 1, "`.nasa (a_search_query) << spaces replaced with underscores`");
+        super("nasa", 0, 1, true, "`.nasa (a search query)`");
     }
 
     @Override
@@ -30,7 +29,7 @@ public class NasaCommand extends Command {
 
         if (args.length == 1) {
 
-            String queryActual = args[0].replaceAll("_", "%20");
+            String queryActual = args[0].replaceAll(" ", "%20");
 
             String json = Util.jsonGrab("https://images-api.nasa.gov/search?q=" + queryActual + "&media_type=image");
 
