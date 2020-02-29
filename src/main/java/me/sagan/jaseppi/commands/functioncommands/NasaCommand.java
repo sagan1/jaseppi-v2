@@ -60,8 +60,14 @@ public class NasaCommand extends Command {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setColor(Color.MAGENTA);
         eb.setAuthor(title);
-        eb.setImage(url);
         eb.addField("Description", explanation, false);
+
+        try {
+            eb.setImage(url);
+        } catch (IllegalArgumentException e) {
+            Jaseppi.send(channel, "Nah some shit aint workin");
+            return;
+        }
 
         channel.sendMessage(eb.build()).queue();
     }
