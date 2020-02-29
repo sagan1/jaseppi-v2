@@ -10,8 +10,8 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class TicTacToe extends Game {
 
     public static final String blank = "\u2B1C";
-    public static final String x = "\u274C";
-    public static final String o = "\u2B55";
+    public static final String x = "\uD83C\uDDFD";
+    public static final String o = "\uD83C\uDD7E";
 
     private String[][] asMatrix = {
             {" ", " ", " "},
