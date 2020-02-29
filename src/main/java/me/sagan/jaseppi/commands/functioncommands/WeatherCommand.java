@@ -15,7 +15,7 @@ public class WeatherCommand extends Command {
     private final String appid = Util.jsonGet("weather_key", Jaseppi.config);
 
     public WeatherCommand() {
-        super("weather", 0, 1, false, "`.weather (city=Kelowna,CA)`", "w");
+        super("weather", 0, 1, true, "`.weather (city=Kelowna,CA)`", "w");
     }
 
     @Override
