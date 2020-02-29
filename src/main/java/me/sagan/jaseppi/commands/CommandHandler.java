@@ -18,7 +18,7 @@ public class CommandHandler extends ListenerAdapter {
 
         if (!String.valueOf(msg.getContentRaw().charAt(0)).equalsIgnoreCase(Jaseppi.prefix)) return;
 
-        String[] argsRaw = msg.getContentRaw().substring(1).split(" ");
+        String[] argsRaw = msg.getContentRaw().substring(Jaseppi.prefix.length()).split(" ");
         String cmd = argsRaw[0];
         String[] argsActual = Arrays.copyOfRange(argsRaw, 1, argsRaw.length);
 
