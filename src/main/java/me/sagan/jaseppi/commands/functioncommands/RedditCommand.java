@@ -76,14 +76,13 @@ public class RedditCommand extends Command {
                 Tokens.REDDIT.getToken("REDDIT_CLIENT_SECRET"));
 
         String tokenResponse = Util.jsonPost(tokenAccessUrl, basicHeaders, payloadData, authData);
-        System.out.println("token response: " + tokenResponse);
 
         String token = "bearer " + Util.jsonGet("access_token", tokenResponse);
-        String baseUrl = "https://oauth.reddit.com/r/" + subredditName + "/hot.json&limit=1&sort=hot";
+        String baseUrl = "https://oauth.reddit.com/api/v1/me";
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", token);
-        headers.put("User-Agent", this.basicHeaders.get("user-agent"));
+        headers.put("User-Agent", "basement-bot-jasepii by y0op");
         String response = Util.jsonGrab(baseUrl, headers, Collections.emptyMap());
 
         System.out.println(response);
