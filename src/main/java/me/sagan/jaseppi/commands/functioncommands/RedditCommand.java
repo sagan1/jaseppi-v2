@@ -3,6 +3,7 @@ package me.sagan.jaseppi.commands.functioncommands;
 import me.sagan.jaseppi.Jaseppi;
 import me.sagan.jaseppi.Responses;
 import me.sagan.jaseppi.Tokens;
+import me.sagan.jaseppi.Util;
 import me.sagan.jaseppi.commands.Command;
 import net.dean.jraw.ApiException;
 import net.dean.jraw.RedditClient;
@@ -54,6 +55,10 @@ public class RedditCommand extends Command {
             return;
         }
 
+        String found = Util.jsonGrab("https://reddit.com/r/" + subredditName + "/hot?limit=1");
+        System.out.println(found);
+
+        /*
         try {
             Listing<Submission> submissions = redditClient.subreddit(subredditName).posts().sorting(SubredditSort.HOT).limit(10).build().next();
             Submission submission = submissions.get(ThreadLocalRandom.current().nextInt(1, 10));
@@ -69,6 +74,6 @@ public class RedditCommand extends Command {
             Jaseppi.send(channel, Responses.INVALID_SUBREDDIT.getRandom());
             e.printStackTrace();
             return;
-        }
+        }*/
     }
 }
