@@ -5,9 +5,9 @@ package me.sagan.jaseppi;
  */
 public enum Tokens {
 
-    DISCORD_MAIN_TOKEN("NjQ2NzYzNDkxNTI4ODAyMzA1.XsdbbA.gOi6ZA8J4dd26bVSnSGrw_X8Wz4"),
-    WEATHER_TOKEN("deb50cd547a7f29d5f5a32979b03ae5f"),
-    NASA_TOKEN("EYOEhuMbfsqiqzoZVCpSZdbbGvw2Nb2zUEtaRPQr"),
+    DISCORD_MAIN_TOKEN("DISCORD_MAIN_TOKEN"),
+    WEATHER_TOKEN("WEATHER_TOKEN"),
+    NASA_TOKEN("NASA_TOKEN"),
     ;
 
     private String[] tokens;
