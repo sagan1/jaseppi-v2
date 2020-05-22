@@ -11,6 +11,7 @@ import net.dean.jraw.http.NetworkException;
 import net.dean.jraw.http.OkHttpNetworkAdapter;
 import net.dean.jraw.http.UserAgent;
 import net.dean.jraw.models.Listing;
+import net.dean.jraw.models.SearchSort;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubredditSort;
 import net.dean.jraw.oauth.Credentials;
@@ -54,7 +55,7 @@ public class RedditCommand extends Command {
         }
 
         try {
-            Listing<Submission> submissions = redditClient.subreddit(subredditName).posts().sorting(SubredditSort.HOT).limit(10).build().getCurrent();
+            Listing<Submission> submissions = redditClient.subreddit(subredditName).search().sorting(SearchSort.HOT).limit(10).build().getCurrent();
             if (submissions == null) {
                 System.out.println("no submissions");
                 Jaseppi.send(channel, Responses.INVALID_SUBREDDIT.getRandom());
