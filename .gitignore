@@ -3,5 +3,6 @@
 .idea
 src/main/resources/
 src/test/
-target/
+target/*
+!target/*.jar
 dependency-reduced-pom.xml
