@@ -86,6 +86,8 @@ public class RedditCommand extends Command {
         headers.put("User-Agent", "basement-bot-jasepii by y0op");
         String response = Util.jsonGrab(baseUrl, headers, Collections.emptyMap());
 
+        System.out.println(response);
+
         /*
         JsonNode randomNode = Util.jsonGetObjArray("", response)[ThreadLocalRandom.current().nextInt(1, 10)];
         String asString = randomNode.toString();
