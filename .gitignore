@@ -4,5 +4,4 @@
 src/main/resources/
 src/test/
 target/
-*.iml
-config.json
+dependency-reduced-pom.xml
