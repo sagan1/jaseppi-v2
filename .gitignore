@@ -4,3 +4,5 @@
 src/main/resources/
 src/test/
 dependency-reduced-pom.xml
+debug.log
+*.iml
