@@ -55,20 +55,15 @@ public class RedditCommand extends Command {
         }
 
         try {
-            Listing<Submission> submissions = redditClient.subreddit(subredditName).search().sorting(SearchSort.HOT).limit(10).build().getCurrent();
-            if (submissions == null) {
-                System.out.println("no submissions");
-                Jaseppi.send(channel, Responses.INVALID_SUBREDDIT.getRandom());
-            } else {
-                Submission submission = submissions.get(ThreadLocalRandom.current().nextInt(1, 10));
-                if (submission.isNsfw() || redditClient.subreddit(subredditName).about().isNsfw()) {
+            Listing<Submission> submissions = redditClient.subreddit(subredditName).posts().sorting(SubredditSort.HOT).limit(10).build().next();
+            Submission submission = submissions.get(ThreadLocalRandom.current().nextInt(1, 10));
+            if (submission.isNsfw() || redditClient.subreddit(subredditName).about().isNsfw()) {
 
-                } else {
-                    Jaseppi.send(channel, submission.getPermalink());
-                    Jaseppi.send(channel, submission.getThumbnail());
-                    Jaseppi.send(channel, submission.getUrl());
-                    Jaseppi.send(channel, submission.getPreview().getImages().get(0).getSource().getUrl());
-                }
+            } else {
+                Jaseppi.send(channel, submission.getPermalink());
+                Jaseppi.send(channel, submission.getThumbnail());
+                Jaseppi.send(channel, submission.getUrl());
+                Jaseppi.send(channel, submission.getPreview().getImages().get(0).getSource().getUrl());
             }
         } catch (ApiException | NetworkException | NullPointerException e) {
             Jaseppi.send(channel, Responses.INVALID_SUBREDDIT.getRandom());
