@@ -55,7 +55,7 @@ public class TagCommand extends Command {
                 if (i >= 8) {
                     this.cancel();
                 } else {
-                    Jaseppi.send(channel, args.length > 1 ? Arrays.toString(args) : args[0]);
+                    Jaseppi.send(channel, args.length > 1 ? Arrays.toString(args).replaceAll("[\\[\\],]", "") : args[0]);
                 }
             }
         }, 1000, 2000);
