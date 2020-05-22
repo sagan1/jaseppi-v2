@@ -79,7 +79,7 @@ public class RedditCommand extends Command {
         String tokenResponse = Util.jsonPost(tokenAccessUrl, basicHeaders, payloadData, authData);
 
         String token = "bearer " + Util.jsonGet("access_token", tokenResponse);
-        String baseUrl = "https://oauth.reddit.com/r/" + subredditName + "/hot.json?sort=hot&limit=3";
+        String baseUrl = "https://oauth.reddit.com/r/dankmemes/hot.json?sort=hot&limit=3";
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", token);
