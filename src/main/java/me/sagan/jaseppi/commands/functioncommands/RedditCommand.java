@@ -35,8 +35,10 @@ public class RedditCommand extends Command {
         super("reddit", 0, 1, 0, ".reddit (subreddit)");
         this.userAgent = new UserAgent("basement-bot", "me.sagan.jaseppi", "1.0.0", "y0op");
 
-        credentials = Credentials.script(Tokens.REDDIT.getTokens()[2], Tokens.REDDIT.getTokens()[3],
-                Tokens.REDDIT.getTokens()[1], Tokens.REDDIT.getTokens()[0]);
+        credentials = Credentials.script(Tokens.REDDIT.getToken("REDDIT_USERNAME"),
+                Tokens.REDDIT.getToken("REDDIT_PASSWORD"),
+                Tokens.REDDIT.getToken("REDDIT_CLIENT_ID"),
+                Tokens.REDDIT.getToken("REDDIT_CLIENT_SECRET"));
         networkAdapter = new OkHttpNetworkAdapter(userAgent);
         redditClient = OAuthHelper.automatic(networkAdapter, credentials);
     }
