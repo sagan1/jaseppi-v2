@@ -14,6 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class NasaCommand extends Command {
 
+    // comment
     private final String key = Util.jsonGet("nasa", Jaseppi.TOKENS);
 
     public NasaCommand() {
