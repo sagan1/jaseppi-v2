@@ -7,7 +7,6 @@ import me.sagan.jaseppi.game.GameType;
 import me.sagan.jaseppi.game.Pair;
 import me.sagan.jaseppi.game.Player;
 import me.sagan.jaseppi.game.games.TicTacToe;
-import me.sagan.jaseppi.game.statistic.StatisticManager;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -68,7 +67,7 @@ public class TTTCommand extends Command {
 
             Game game = Game.getGame(author.getId());
             Jaseppi.send(channel, "Game's over, <@" + author.getId() + "> left like a bitch");
-            game.end(new StatisticManager.Statistic(GameType.TICTACTOE, author.getId(), 0, 0, 1));
+            game.end();
             return;
         }
 
@@ -95,11 +94,7 @@ public class TTTCommand extends Command {
 
         if (won != null) {
             Jaseppi.send(channel, "Game's over: <@" + game.getTurn().getUserId() + "> wins");
-            game.end(new StatisticManager.Statistic(GameType.TICTACTOE, game.getTurn().getUserId(), 1, 0, 0),
-                    new StatisticManager.Statistic(GameType.TICTACTOE,
-                            game.getTurn().getUserId().equalsIgnoreCase(game.getPlayers().getOne().getUserId()) ?
-                            game.getPlayers().getTwo().getUserId() : game.getPlayers().getTwo().getUserId(),
-                            0, 1, 0));
+            game.end();
             return;
         } else if (game.findTie()) {
             Jaseppi.send(channel, "Game's over: tie cuz u both suck");

@@ -16,6 +16,10 @@ public class CommandHandler extends ListenerAdapter {
 
         if (msg.getAuthor().isBot()) return;
 
+        if (msg.getContentRaw().length() < 2) {
+            return;
+        }
+
         if (!String.valueOf(msg.getContentRaw().charAt(0)).equalsIgnoreCase(Jaseppi.prefix)) return;
 
         String[] argsRaw = msg.getContentRaw().substring(Jaseppi.prefix.length()).split(" ");
