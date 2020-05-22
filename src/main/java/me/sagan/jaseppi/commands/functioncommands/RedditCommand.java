@@ -56,6 +56,7 @@ public class RedditCommand extends Command {
         try {
             Listing<Submission> submissions = redditClient.subreddit(subredditName).posts().sorting(SubredditSort.HOT).limit(10).build().getCurrent();
             if (submissions == null) {
+                System.out.println("no submissions");
                 Jaseppi.send(channel, Responses.INVALID_SUBREDDIT.getRandom());
             } else {
                 Submission submission = submissions.get(ThreadLocalRandom.current().nextInt(1, 10));
@@ -70,6 +71,7 @@ public class RedditCommand extends Command {
             }
         } catch (ApiException | NetworkException | NullPointerException e) {
             Jaseppi.send(channel, Responses.INVALID_SUBREDDIT.getRandom());
+            e.printStackTrace();
             return;
         }
     }
