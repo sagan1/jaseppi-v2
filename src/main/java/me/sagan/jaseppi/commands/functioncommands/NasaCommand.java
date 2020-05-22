@@ -19,7 +19,7 @@ public class NasaCommand extends Command {
     private final String key = Tokens.NASA_TOKEN.getToken();
 
     public NasaCommand() {
-        super("nasa", 0, 1, true, "`.nasa (a search query)`");
+        super("nasa", 0, 1000, 0, ".nasa (a search query)");
     }
 
     @Override
@@ -29,7 +29,7 @@ public class NasaCommand extends Command {
         String url;
         String explanation;
 
-        if (args.length == 1) {
+        if (args.length >= 1) {
 
             String queryActual = args[0].replaceAll(" ", "%20");
 

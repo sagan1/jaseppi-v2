@@ -27,6 +27,5 @@ public class CommandHandler extends ListenerAdapter {
         String[] argsActual = Arrays.copyOfRange(argsRaw, 1, argsRaw.length);
 
         Command.delegate(event.getMessage(), event.getMember(), event.getChannel(), cmd, argsActual);
-        System.out.println("found agrs: " + Arrays.toString(argsActual));
     }
 }

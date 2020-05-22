@@ -7,17 +7,17 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
  * @author cam (sagan/y0op)
- * Doc
  */
 public class TagCommand extends Command {
 
     public TagCommand() {
-        super("tag", 1, -1, true, ".tag <user> (suffix)");
+        super("tag", 1, 1000, 1, ".tag <user> (suffix)");
     }
 
     @Override
@@ -42,7 +42,7 @@ public class TagCommand extends Command {
             return;
         }
 
-        String toTag = "<@" + mentioned.getId() + ">";
+        //String toTag = "<@" + mentioned.getId() + ">";
 
         Timer t = new Timer();
         t.schedule(new TimerTask() {
@@ -55,7 +55,7 @@ public class TagCommand extends Command {
                 if (i >= 8) {
                     this.cancel();
                 } else {
-                    Jaseppi.send(channel, args.length <= 1 ? toTag : toTag + " " + args[1]);
+                    Jaseppi.send(channel, args.length > 1 ? Arrays.toString(args) : args[0]);
                 }
             }
         }, 1000, 2000);

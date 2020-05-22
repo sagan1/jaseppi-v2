@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class HelpCommand extends Command {
 
     public HelpCommand() {
-        super("help", 0, 100, false, ".help");
+        super("help", 0, 0, ".help");
     }
 
     @Override

@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public abstract class Command {
 
@@ -14,22 +15,30 @@ public abstract class Command {
     private String[] aliases;
     private int minArgs;
     private int maxArgs;
-    private boolean concatArgs;
+    private Optional<Integer> concatArgsAfterArg;
 
-    public Command(String cmd, int minArgs, int maxArgs, boolean concatArgs, String usage, String... aliases) {
+    public Command(String cmd, int minArgs, int maxArgs, String usage, String... aliases) {
         this.cmd = cmd;
         this.usage = usage;
         this.aliases = aliases;
         this.maxArgs = maxArgs;
         this.minArgs = minArgs;
-        this.concatArgs = concatArgs;
+        this.concatArgsAfterArg = Optional.empty();
     }
 
-    public abstract void handle(Message message, Member author, TextChannel channel, String[] args);
-
-    public boolean concatArgs() {
-        return concatArgs;
+    public Command(String cmd, int minArgs, int maxArgs, int concatArgsAfterArg, String usage, String... aliases) {
+        this.cmd = cmd;
+        this.usage = usage;
+        this.aliases = aliases;
+        this.maxArgs = maxArgs;
+        this.minArgs = minArgs;
+        this.concatArgsAfterArg = Optional.of(concatArgsAfterArg);
+        if (concatArgsAfterArg >= maxArgs) {
+            this.concatArgsAfterArg = Optional.empty();
+        }
     }
+
+    public abstract void handle(Message message, Member author, TextChannel channel, String... args);
 
     public String getCmd() {
         return cmd;
@@ -76,10 +85,20 @@ public abstract class Command {
         CommandRegistry.commands.forEach(command -> {
             if (command.getCmd().equalsIgnoreCase(cmd) || command.hasAlias(cmd)) {
 
-                if (command.concatArgs()) {
-                    String[] concatArgs = new String[]{String.join(" ", args)};
-                    System.out.println("concating args to: " + Arrays.toString(concatArgs));
-                    command.handle(message, author, channel, concatArgs);
+                if (command.concatArgsAfterArg.isPresent()) {
+                    //.tag quiver you're an idiot
+
+                    // get all the args before the concatenation as an array
+                    String[] initialArgs = Arrays.copyOfRange(args, 0, command.concatArgsAfterArg.get());
+                    // concatenate all the args after the concatenation into a single string
+                    String concatArgs = String.join(" ", Arrays.copyOfRange(args, command.concatArgsAfterArg.get(), args.length));
+
+                    // combine all prefixing args and the concatenated arg into one array
+                    String[] actualArgs = new String[initialArgs.length + 1];
+                    System.arraycopy(initialArgs, 0, actualArgs, 0, initialArgs.length);
+                    actualArgs[actualArgs.length - 1] = concatArgs;
+
+                    command.handle(message, author, channel, actualArgs);
                     return;
                 } else if (args.length < command.minArgs || args.length > command.maxArgs) {
                     Jaseppi.send(channel, "Retard. Try this: `" + command.usage + "`");

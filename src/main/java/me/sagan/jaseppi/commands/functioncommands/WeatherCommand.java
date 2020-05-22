@@ -15,7 +15,7 @@ public class WeatherCommand extends Command {
     private final String appid = Tokens.WEATHER_TOKEN.getToken();
 
     public WeatherCommand() {
-        super("weather", 0, 1, true, "`.weather (city=Kelowna,CA)`", "w");
+        super("weather", 0, 1000, ".weather (city=Kelowna,CA)", "w");
     }
 
     @Override
