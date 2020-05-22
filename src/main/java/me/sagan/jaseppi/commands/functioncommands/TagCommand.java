@@ -17,7 +17,7 @@ import java.util.TimerTask;
 public class TagCommand extends Command {
 
     public TagCommand() {
-        super("tag", 1, 1, false, ".tag <user>");
+        super("tag", 1, -1, true, ".tag <user> (suffix)");
     }
 
     @Override
@@ -52,10 +52,10 @@ public class TagCommand extends Command {
             @Override
             public void run() {
                 i++;
-                if (i >= 15) {
+                if (i >= 8) {
                     this.cancel();
                 } else {
-                    Jaseppi.send(channel, toTag);
+                    Jaseppi.send(channel, args.length <= 1 ? toTag : toTag + " " + args[1]);
                 }
             }
         }, 1000, 2000);

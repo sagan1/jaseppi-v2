@@ -12,6 +12,7 @@ D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\game\games\TicTacToe.ja
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\Jaseppi.java
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\commands\CommandRegistry.java
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\game\Player.java
+D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\commands\functioncommands\HelpCommand.java
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\commands\functioncommands\NasaCommand.java
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\game\GameType.java
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\Responses.java

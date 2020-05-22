@@ -14,7 +14,7 @@ public abstract class Command {
     private int maxArgs;
     private boolean concatArgs;
 
-    protected Command(String cmd, int minArgs, int maxArgs, boolean concatArgs, String usage, String... aliases) {
+    public Command(String cmd, int minArgs, int maxArgs, boolean concatArgs, String usage, String... aliases) {
         this.cmd = cmd;
         this.usage = usage;
         this.aliases = aliases;
@@ -79,7 +79,7 @@ public abstract class Command {
                     command.handle(message, author, channel, command.concatArgs() ? concatArgs : args);
                     return;
                 } else if (args.length < command.minArgs || args.length > command.maxArgs) {
-                    Jaseppi.send(channel, "You typed it wrong, follow this: " + command.usage);
+                    Jaseppi.send(channel, "Retard. Try this: `" + command.usage + "`");
                     return;
                 }
 

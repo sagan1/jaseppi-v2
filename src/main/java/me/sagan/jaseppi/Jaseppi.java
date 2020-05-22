@@ -2,6 +2,7 @@ package me.sagan.jaseppi;
 
 import me.sagan.jaseppi.commands.CommandHandler;
 import me.sagan.jaseppi.commands.CommandRegistry;
+import me.sagan.jaseppi.commands.functioncommands.HelpCommand;
 import me.sagan.jaseppi.commands.functioncommands.NasaCommand;
 import me.sagan.jaseppi.commands.functioncommands.TagCommand;
 import me.sagan.jaseppi.commands.functioncommands.WeatherCommand;
@@ -42,6 +43,7 @@ public class Jaseppi {
         CommandRegistry.register(new WeatherCommand());
         CommandRegistry.register(new NasaCommand());
         CommandRegistry.register(new TagCommand());
+        CommandRegistry.register(new HelpCommand());
     }
 
     public static void send(TextChannel channel, String message) {
