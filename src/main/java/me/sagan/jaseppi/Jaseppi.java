@@ -22,10 +22,11 @@ public class Jaseppi {
 
     public static JDA jda;
     public static String prefix = ".";
+    public static final File TOKENS = new File("config.json");
 
     public static void main(String[] args) {
         JDABuilder builder = new JDABuilder(AccountType.BOT)
-                .setToken(Tokens.MAIN.getKeys()[0])
+                .setToken(Util.jsonGet("main", TOKENS))
                 .setActivity(Activity.watching("you"))
                 .setDisabledCacheFlags(EnumSet.of(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE))
                 .setBulkDeleteSplittingEnabled(false);

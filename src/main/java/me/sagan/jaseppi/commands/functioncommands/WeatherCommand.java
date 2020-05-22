@@ -1,6 +1,6 @@
 package me.sagan.jaseppi.commands.functioncommands;
 
-import me.sagan.jaseppi.Tokens;
+import me.sagan.jaseppi.Jaseppi;
 import me.sagan.jaseppi.Util;
 import me.sagan.jaseppi.commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class WeatherCommand extends Command {
 
-    private final String appid = Tokens.WEATHER.getKeys()[0];
+    private final String appid = Util.jsonGet("weather", Jaseppi.TOKENS);
 
     public WeatherCommand() {
         super("weather", 0, 1, true, "`.weather (city=Kelowna,CA)`", "w");

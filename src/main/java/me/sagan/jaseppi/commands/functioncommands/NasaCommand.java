@@ -2,7 +2,6 @@ package me.sagan.jaseppi.commands.functioncommands;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import me.sagan.jaseppi.Jaseppi;
-import me.sagan.jaseppi.Tokens;
 import me.sagan.jaseppi.Util;
 import me.sagan.jaseppi.commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -15,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class NasaCommand extends Command {
 
-    private final String key = Tokens.NASA.getKeys()[0];
+    private final String key = Util.jsonGet("nasa", Jaseppi.TOKENS);
 
     public NasaCommand() {
         super("nasa", 0, 1, true, "`.nasa (a search query)`");
