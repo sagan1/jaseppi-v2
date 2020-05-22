@@ -38,7 +38,7 @@ public abstract class Command {
         }
     }
 
-    public abstract void handle(Message message, Member author, TextChannel channel, String... args);
+    public abstract void handle(Message message, Member author, TextChannel channel, String[] args);
 
     public String getCmd() {
         return cmd;
