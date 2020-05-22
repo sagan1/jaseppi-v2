@@ -15,18 +15,16 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.security.auth.login.LoginException;
-import java.io.File;
 import java.util.EnumSet;
 
 public class Jaseppi {
 
     public static JDA jda;
     public static String prefix = ".";
-    public static final File TOKENS = new File("config.json");
 
     public static void main(String[] args) {
         JDABuilder builder = new JDABuilder(AccountType.BOT)
-                .setToken(Util.jsonGet("main", TOKENS))
+                .setToken(Tokens.DISCORD_MAIN_TOKEN.getToken())
                 .setActivity(Activity.watching("you"))
                 .setDisabledCacheFlags(EnumSet.of(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE))
                 .setBulkDeleteSplittingEnabled(false);

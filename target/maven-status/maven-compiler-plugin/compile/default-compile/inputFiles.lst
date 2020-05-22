@@ -2,6 +2,7 @@ D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\game\Game.java
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\game\games\Connect4.java
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\Util.java
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\commands\CommandHandler.java
+D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\Tokens.java
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\commands\gamecommands\C4Command.java
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\commands\functioncommands\WeatherCommand.java
 D:\Coding\Java\jaseppi-v2\src\main\java\me\sagan\jaseppi\commands\functioncommands\TagCommand.java

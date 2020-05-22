@@ -3,6 +3,8 @@
 .idea
 src/main/resources/
 src/test/
+taget/*
+!target/*.jar
 dependency-reduced-pom.xml
 debug.log
 *.iml
