@@ -1,5 +1,6 @@
 package me.sagan.jaseppi.commands.functioncommands;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import me.sagan.jaseppi.Jaseppi;
 import me.sagan.jaseppi.Responses;
 import me.sagan.jaseppi.Tokens;
@@ -78,31 +79,18 @@ public class RedditCommand extends Command {
         String tokenResponse = Util.jsonPost(tokenAccessUrl, basicHeaders, payloadData, authData);
 
         String token = "bearer " + Util.jsonGet("access_token", tokenResponse);
-        String baseUrl = "https://oauth.reddit.com/r/dankmemes/hot.json?sort=hot&limit=1";
+        String baseUrl = "https://oauth.reddit.com/r/" + subredditName + "/hot.json?sort=hot&limit=3";
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", token);
         headers.put("User-Agent", "basement-bot-jasepii by y0op");
         String response = Util.jsonGrab(baseUrl, headers, Collections.emptyMap());
 
-        System.out.println(response);
-
         /*
-        try {
-            Listing<Submission> submissions = redditClient.subreddit(subredditName).posts().sorting(SubredditSort.HOT).limit(10).build().next();
-            Submission submission = submissions.get(ThreadLocalRandom.current().nextInt(1, 10));
-            if (submission.isNsfw() || redditClient.subreddit(subredditName).about().isNsfw()) {
+        JsonNode randomNode = Util.jsonGetObjArray("", response)[ThreadLocalRandom.current().nextInt(1, 10)];
+        String asString = randomNode.toString();
 
-            } else {
-                Jaseppi.send(channel, submission.getPermalink());
-                Jaseppi.send(channel, submission.getThumbnail());
-                Jaseppi.send(channel, submission.getUrl());
-                Jaseppi.send(channel, submission.getPreview().getImages().get(0).getSource().getUrl());
-            }
-        } catch (ApiException | NetworkException | NullPointerException e) {
-            Jaseppi.send(channel, Responses.INVALID_SUBREDDIT.getRandom());
-            e.printStackTrace();
-            return;
-        }*/
+        boolean over18 = Util.jsonGet("")
+         */
     }
 }
