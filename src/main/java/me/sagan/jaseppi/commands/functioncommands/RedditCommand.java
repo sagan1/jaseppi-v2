@@ -55,7 +55,7 @@ public class RedditCommand extends Command {
             return;
         }
 
-        String found = Util.jsonGrab("https://reddit.com/r/" + subredditName + "/hot?limit=1");
+        String found = Util.jsonGrab("https://www.reddit.com/r/" + subredditName + "/hot?limit=1");
         System.out.println(found);
 
         /*
