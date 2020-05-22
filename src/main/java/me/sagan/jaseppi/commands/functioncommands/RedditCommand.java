@@ -76,6 +76,7 @@ public class RedditCommand extends Command {
                 Tokens.REDDIT.getToken("REDDIT_CLIENT_SECRET"));
 
         String tokenResponse = Util.jsonPost(tokenAccessUrl, basicHeaders, payloadData, authData);
+        System.out.println("token response: " + tokenResponse);
 
         String token = "bearer " + Util.jsonGet("access_token", tokenResponse);
         String baseUrl = "https://oauth.reddit.com/r/" + subredditName + "/hot.json&limit=1&sort=hot";
