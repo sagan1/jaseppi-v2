@@ -3,12 +3,15 @@ package me.sagan.jaseppi;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import okhttp3.Credentials;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 public class Util {
 
@@ -35,10 +38,55 @@ public class Util {
     }
 
     public static String jsonGrab(String url) {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url).build();
+
+        String json;
+
+        try {
+            json = client.newCall(request).execute().body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return json;
+    }
+
+    public static String jsonPost(String url, Map<String, String> headersNameValue, Map<String, String> data, Map<String, String> authCredentials) {
 
         OkHttpClient client = new OkHttpClient();
 
-        Request request = new Request.Builder().url(url).build();
+        FormBody.Builder postBuilder = new FormBody.Builder();
+        data.forEach(postBuilder::add);
+
+        Request.Builder requestBuilder = new Request.Builder().url(url).post(postBuilder.build());
+        headersNameValue.forEach(requestBuilder::addHeader);
+        authCredentials.forEach((s, s2) -> requestBuilder.addHeader("Authorization", Credentials.basic(s, s2)));
+
+        Request request = requestBuilder.build();
+
+        String json;
+
+        try {
+            json = client.newCall(request).execute().body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return json;
+    }
+
+    public static String jsonGrab(String url, Map<String, String> headersNameValue, Map<String, String> authCredentials) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request.Builder requestBuilder = new Request.Builder().url(url).get();
+        headersNameValue.forEach(requestBuilder::addHeader);
+        authCredentials.forEach((s, s2) -> requestBuilder.addHeader("Authorization", Credentials.basic(s, s2)));
+
+        Request request = requestBuilder.build();
 
         String json;
 

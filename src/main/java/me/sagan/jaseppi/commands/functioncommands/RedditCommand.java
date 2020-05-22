@@ -21,6 +21,9 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -28,21 +31,24 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class RedditCommand extends Command {
 
-    private UserAgent userAgent;
-    private Credentials credentials;
-    private NetworkAdapter networkAdapter;
-    private RedditClient redditClient;
+    private Map<String, String> basicHeaders;
+    private Map<String, String> payloadData;
+    private Map<String, String> authData;
 
     public RedditCommand() {
         super("reddit", 0, 1, 0, ".reddit (subreddit)");
-        this.userAgent = new UserAgent("basement-bot", "me.sagan.jaseppi", "1.0.0", "y0op");
 
-        credentials = Credentials.script(Tokens.REDDIT.getToken("REDDIT_USERNAME"),
-                Tokens.REDDIT.getToken("REDDIT_PASSWORD"),
-                Tokens.REDDIT.getToken("REDDIT_CLIENT_ID"),
+        basicHeaders = new HashMap<>();
+        basicHeaders.put("user-agent", "basement-bot-jaseppi by y0op");
+
+        payloadData = new HashMap<>();
+        payloadData.put("grant_type", "password");
+        payloadData.put("username", Tokens.REDDIT.getToken("REDDIT_USERNAME"));
+        payloadData.put("password", Tokens.REDDIT.getToken("REDDIT_PASSWORD"));
+
+        authData = new HashMap<>();
+        authData.put(Tokens.REDDIT.getToken("REDDIT_CLIENT_ID"),
                 Tokens.REDDIT.getToken("REDDIT_CLIENT_SECRET"));
-        networkAdapter = new OkHttpNetworkAdapter(userAgent);
-        redditClient = OAuthHelper.automatic(networkAdapter, credentials);
     }
 
     @Override
@@ -55,8 +61,31 @@ public class RedditCommand extends Command {
             return;
         }
 
-        String found = Util.jsonGrab("http://www.reddit.com/r/" + subredditName + "/hot.json?limit=1&sort=hot");
-        System.out.println(found);
+        String tokenAccessUrl = "https://www.reddit.com/api/v1/access_token";
+
+        Map<String, String> basicHeaders = new HashMap<>();
+        basicHeaders.put("user-agent", "basement-bot-jaseppi by y0op");
+
+        Map<String, String> payloadData = new HashMap<>();
+        payloadData.put("grant_type", "password");
+        payloadData.put("username", Tokens.REDDIT.getToken("REDDIT_USERNAME"));
+        payloadData.put("password", Tokens.REDDIT.getToken("REDDIT_PASSWORD"));
+
+        Map<String, String> authData = new HashMap<>();
+        authData.put(Tokens.REDDIT.getToken("REDDIT_CLIENT_ID"),
+                Tokens.REDDIT.getToken("REDDIT_CLIENT_SECRET"));
+
+        String tokenResponse = Util.jsonPost(tokenAccessUrl, basicHeaders, payloadData, authData);
+
+        String token = "bearer " + Util.jsonGet("access_token", tokenResponse);
+        String baseUrl = "https://oauth.reddit.com/r/" + subredditName + "/hot.json&limit=1&sort=hot";
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", token);
+        headers.put("User-Agent", this.basicHeaders.get("user-agent"));
+        String response = Util.jsonGrab(baseUrl, headers, Collections.emptyMap());
+
+        System.out.println(response);
 
         /*
         try {
