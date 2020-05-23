@@ -1,6 +1,7 @@
 package me.sagan.jaseppi.commands.functioncommands;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.BooleanNode;
 import me.sagan.jaseppi.Jaseppi;
 import me.sagan.jaseppi.Responses;
 import me.sagan.jaseppi.Tokens;
@@ -55,6 +56,7 @@ public class RedditCommand extends Command {
     @Override
     public void handle(Message message, Member author, TextChannel channel, String[] args) {
         String subredditName = args.length == 0 ? "dankmemes" : args[0];
+        System.out.println("subreddit name: " + subredditName);
 
         if (subredditName.contains("man") || subredditName.contains("men") || subredditName.contains("male") ||
                 subredditName.contains("gay") || subredditName.contains("homo")) {
@@ -86,13 +88,14 @@ public class RedditCommand extends Command {
         headers.put("User-Agent", "basement-bot-jasepii by y0op");
         String response = Util.jsonGrab(baseUrl, headers, Collections.emptyMap());
 
-        System.out.println(response);
+        JsonNode[] randomNodes = Util.jsonGetObjArray("data.children", response);
+        if (randomNodes == null) return;
 
-        /*
-        JsonNode randomNode = Util.jsonGetObjArray("", response)[ThreadLocalRandom.current().nextInt(1, 10)];
+        JsonNode randomNode = randomNodes[ThreadLocalRandom.current().nextInt(1, 3)];
         String asString = randomNode.toString();
 
-        boolean over18 = Util.jsonGet("")
-         */
+        boolean over18 = Boolean.parseBoolean(Util.jsonGet("data.over18", asString));
+        String mediaUrl = Util.jsonGet("data.url", asString);
+        System.out.println("over18: " + over18 + " | url: " + mediaUrl);
     }
 }
