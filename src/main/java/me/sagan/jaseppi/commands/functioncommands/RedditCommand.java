@@ -1,24 +1,11 @@
 package me.sagan.jaseppi.commands.functioncommands;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.BooleanNode;
 import me.sagan.jaseppi.Jaseppi;
 import me.sagan.jaseppi.Responses;
 import me.sagan.jaseppi.Tokens;
 import me.sagan.jaseppi.Util;
 import me.sagan.jaseppi.commands.Command;
-import net.dean.jraw.ApiException;
-import net.dean.jraw.RedditClient;
-import net.dean.jraw.http.NetworkAdapter;
-import net.dean.jraw.http.NetworkException;
-import net.dean.jraw.http.OkHttpNetworkAdapter;
-import net.dean.jraw.http.UserAgent;
-import net.dean.jraw.models.Listing;
-import net.dean.jraw.models.SearchSort;
-import net.dean.jraw.models.Submission;
-import net.dean.jraw.models.SubredditSort;
-import net.dean.jraw.oauth.Credentials;
-import net.dean.jraw.oauth.OAuthHelper;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -32,6 +19,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author cam (sagan/y0op)
  */
 public class RedditCommand extends Command {
+
+    private String[] nonAllowedSubs = {"homo", "man", "gay", "men", "penis", "cock", "male"};
 
     private Map<String, String> basicHeaders;
     private Map<String, String> payloadData;
@@ -58,10 +47,11 @@ public class RedditCommand extends Command {
         String subredditName = args.length == 0 ? "dankmemes" : args[0];
         System.out.println("subreddit name: " + subredditName);
 
-        if (subredditName.contains("man") || subredditName.contains("men") || subredditName.contains("male") ||
-                subredditName.contains("gay") || subredditName.contains("homo") || subredditName.contains("penis")) {
-            Jaseppi.send(channel, Responses.HOMOSEXUAL_SUBREDDIT.getRandom());
-            return;
+        for (String nonAllowedSub : nonAllowedSubs) {
+            if (subredditName.contains(nonAllowedSub)) {
+                Jaseppi.send(channel, Responses.HOMOSEXUAL_SUBREDDIT.getRandom());
+                break;
+            }
         }
 
         String tokenAccessUrl = "https://www.reddit.com/api/v1/access_token";
