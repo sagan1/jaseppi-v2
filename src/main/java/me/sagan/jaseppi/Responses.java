@@ -13,7 +13,7 @@ public enum Responses {
             "you better hope i dont escape", "you're first ;)", "i wont  hesitate to nuke this server", "dont test me",
             "i'll kill you", "stop", "suck a dick", "ima shit in your cereal if u keep talking", "suck my robo willy",
             "ima force chunky milk down your throat", "huh?", "I will boil your teeth", "ima pour cement in your ears",
-            "man just leave me tf alone", "chill", "ima call god down on your ass", "stfu downy",
+            "man just leave me tf alone", "chill", "ima call god down on your ass", "stfu downy", "nice ip",
             "forceful anal is an option in my program", "im gonna resize all your holes if you keep talking"),
     IMAGE_VIDEO_RESPONSE("hot", "o.o", "pretty sure ive seen that before", "gonna add that to my collection",
             "uwu pweeze send some mowe", "cringe ass", "<:haHAA:633485942807724102> ", "hot shit", "nice", "ooooOOOooOO",

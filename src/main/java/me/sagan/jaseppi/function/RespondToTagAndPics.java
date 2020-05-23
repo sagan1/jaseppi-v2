@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.annotation.Nonnull;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author cam (sagan/y0op)
@@ -28,7 +29,7 @@ public class RespondToTagAndPics extends ListenerAdapter {
 
         // wont even run if no attachments
         if (msg.getAttachments().stream().anyMatch(attachment -> attachment.isImage() || attachment.isVideo())) {
-            if (msg.getTextChannel().getId().equalsIgnoreCase("537425389103087636")) {
+            if (msg.getTextChannel().getId().equalsIgnoreCase("537425389103087636") && ThreadLocalRandom.current().nextDouble() > 0.6) {
                 Jaseppi.send(event.getChannel(), Responses.IMAGE_VIDEO_RESPONSE.getRandom());
             }
         }
