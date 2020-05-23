@@ -21,7 +21,9 @@ public enum Responses {
             "fuck outa here with that shit", "that's some top tier shit", "normie", "noiggers?", "huh"),
     INVALID_SUBREDDIT("maybe try an actual subreddit next time", "you dumb as shit", "nice1", "retard, try a real subreddit",
             "that shit dont exist", "tf kinda subreddit is that"),
-    HOMOSEXUAL_SUBREDDIT("miss me with that gay shit", "you gay as fuck", "i bet you'd like that wouldn't you?")
+    HOMOSEXUAL_SUBREDDIT("miss me with that gay shit", "you gay as fuck", "i bet you'd like that wouldn't you?"),
+    NSFW_SUBREDDIT_REQUEST(";)", "i gotchu", "my man", "u real horny today huh", "get yo disgusting ass outa here",
+            "weirdo"),
     ;
 
     private String[] s;

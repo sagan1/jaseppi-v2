@@ -88,6 +88,11 @@ public class RedditCommand extends Command {
         headers.put("User-Agent", "basement-bot-jasepii by y0op");
         String response = Util.jsonGrab(baseUrl, headers, Collections.emptyMap());
 
+        if (response == null || response.contains("error")) {
+            Jaseppi.send(channel, Responses.INVALID_SUBREDDIT.getRandom());
+            return;
+        }
+
         JsonNode[] randomNodes = Util.jsonGetObjArray("data.children", response);
         if (randomNodes == null) return;
 
@@ -99,6 +104,7 @@ public class RedditCommand extends Command {
 
         if (over18) {
             Jaseppi.send(message.getGuild().getTextChannelById(713543651128639538L), mediaUrl);
+            Jaseppi.send(channel, Responses.NSFW_SUBREDDIT_REQUEST.getRandom());
         } else {
             Jaseppi.send(channel, mediaUrl);
         }
