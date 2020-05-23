@@ -98,7 +98,7 @@ public class RedditCommand extends Command {
         String mediaUrl = Util.jsonGet("data.url", asString);
 
         if (over18) {
-            Jaseppi.send(Jaseppi.nsfw, mediaUrl);
+            Jaseppi.send(message.getGuild().getTextChannelById(713543651128639538L), mediaUrl);
         } else {
             Jaseppi.send(channel, mediaUrl);
         }
