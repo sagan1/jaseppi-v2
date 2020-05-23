@@ -20,7 +20,8 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class RedditCommand extends Command {
 
-    private String[] nonAllowedSubs = {"homo", "man", "gay", "men", "penis", "cock", "male"};
+    private String[] nonAllowedSubs = {"homo", "man", "gay", "men", "penis", "cock", "male", "guy", "foot", "feet",
+            "disease", "disgusting"};
 
     private Map<String, String> basicHeaders;
     private Map<String, String> payloadData;
@@ -49,7 +50,7 @@ public class RedditCommand extends Command {
 
         for (String nonAllowedSub : nonAllowedSubs) {
             if (subredditName.contains(nonAllowedSub)) {
-                Jaseppi.send(channel, Responses.HOMOSEXUAL_SUBREDDIT.getRandom());
+                Jaseppi.send(channel, Responses.NON_ALLOWED_SUBREDDIT.getRandom());
                 break;
             }
         }
