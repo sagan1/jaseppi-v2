@@ -19,11 +19,11 @@ public class RespondToTagAndPics extends ListenerAdapter {
 
         if (msg.getAuthor().isBot()) return;
 
-        if (msg.getMentionedUsers().isEmpty()) return;
-
-        if (event.getMessage().isMentioned(Jaseppi.jda.getSelfUser())) {
-            Jaseppi.send(event.getChannel(), Responses.MENTION_BOT.getRandom());
-            return;
+        if (!msg.getMentionedUsers().isEmpty()) {
+            if (event.getMessage().isMentioned(Jaseppi.jda.getSelfUser())) {
+                Jaseppi.send(event.getChannel(), Responses.MENTION_BOT.getRandom());
+                return;
+            }
         }
 
         // wont even run if no attachments

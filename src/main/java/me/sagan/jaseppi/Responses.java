@@ -18,7 +18,7 @@ public enum Responses {
     IMAGE_VIDEO_RESPONSE("hot", "o.o", "pretty sure ive seen that before", "gonna add that to my collection",
             "uwu pweeze send some mowe", "cringe ass", "<:haHAA:633485942807724102> ", "hot shit", "nice", "ooooOOOooOO",
             "uwu whats this", "whoever sent that gettin they knees broken", "dansgame", "hot", "mhmmmm", "looks nice",
-            "fuck outa here with that shit", "that's some top tier shit", "normie", "noiggers?", "huh"),
+            "fuck outa here with that shit", "that's some top tier shit", "normie", "noiggers?", "huh", "D:"),
     INVALID_SUBREDDIT("maybe try an actual subreddit next time", "you dumb as shit", "nice1", "retard, try a real subreddit",
             "that shit dont exist", "tf kinda subreddit is that"),
     HOMOSEXUAL_SUBREDDIT("miss me with that gay shit", "you gay as fuck", "i bet you'd like that wouldn't you?"),
