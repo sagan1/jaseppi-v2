@@ -59,7 +59,7 @@ public class RedditCommand extends Command {
         System.out.println("subreddit name: " + subredditName);
 
         if (subredditName.contains("man") || subredditName.contains("men") || subredditName.contains("male") ||
-                subredditName.contains("gay") || subredditName.contains("homo")) {
+                subredditName.contains("gay") || subredditName.contains("homo") || subredditName.contains("penis")) {
             Jaseppi.send(channel, Responses.HOMOSEXUAL_SUBREDDIT.getRandom());
             return;
         }
