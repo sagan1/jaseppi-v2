@@ -24,6 +24,7 @@ public class Jaseppi {
 
     public static JDA jda;
     public static String prefix = ".";
+    public static TextChannel nsfw;
 
     public static void main(String[] args) {
         JDABuilder builder = new JDABuilder(AccountType.BOT)
@@ -37,6 +38,8 @@ public class Jaseppi {
         } catch (LoginException e) {
             e.printStackTrace();
         }
+
+        nsfw = jda.getTextChannelById("713543651128639538");
 
         jda.addEventListener(new CommandHandler());
         jda.addEventListener(new RespondToTagAndPics());

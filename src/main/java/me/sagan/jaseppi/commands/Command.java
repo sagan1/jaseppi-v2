@@ -88,6 +88,12 @@ public abstract class Command {
                 if (command.concatArgsAfterArg.isPresent()) {
                     //.tag quiver you're an idiot
 
+                    // for some reason a space was being passed in when there were no args so I added this
+                    if (args.length == 0) {
+                        command.handle(message, author, channel, new String[]{});
+                        return;
+                    }
+
                     // get all the args before the concatenation as an array
                     String[] initialArgs = Arrays.copyOfRange(args, 0, command.concatArgsAfterArg.get());
                     // concatenate all the args after the concatenation into a single string

@@ -96,6 +96,11 @@ public class RedditCommand extends Command {
 
         boolean over18 = Boolean.parseBoolean(Util.jsonGet("data.over18", asString));
         String mediaUrl = Util.jsonGet("data.url", asString);
-        System.out.println("over18: " + over18 + " | url: " + mediaUrl);
+
+        if (over18) {
+            Jaseppi.send(Jaseppi.nsfw, mediaUrl);
+        } else {
+            Jaseppi.send(channel, mediaUrl);
+        }
     }
 }
