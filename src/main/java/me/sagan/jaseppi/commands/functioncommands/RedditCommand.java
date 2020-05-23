@@ -81,7 +81,7 @@ public class RedditCommand extends Command {
         String tokenResponse = Util.jsonPost(tokenAccessUrl, basicHeaders, payloadData, authData);
 
         String token = "bearer " + Util.jsonGet("access_token", tokenResponse);
-        String baseUrl = "https://oauth.reddit.com/r/" + subredditName + "/hot.json?sort=hot&limit=3";
+        String baseUrl = "https://oauth.reddit.com/r/" + subredditName + "/hot.json?sort=hot&limit=5";
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", token);
@@ -91,7 +91,7 @@ public class RedditCommand extends Command {
         JsonNode[] randomNodes = Util.jsonGetObjArray("data.children", response);
         if (randomNodes == null) return;
 
-        JsonNode randomNode = randomNodes[ThreadLocalRandom.current().nextInt(1, 3)];
+        JsonNode randomNode = randomNodes[ThreadLocalRandom.current().nextInt(2, 5)];
         String asString = randomNode.toString();
 
         boolean over18 = Boolean.parseBoolean(Util.jsonGet("data.over18", asString));
