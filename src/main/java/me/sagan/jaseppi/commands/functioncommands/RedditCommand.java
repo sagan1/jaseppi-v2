@@ -94,7 +94,7 @@ public class RedditCommand extends Command {
         JsonNode randomNode = randomNodes[ThreadLocalRandom.current().nextInt(2, 5)];
         String asString = randomNode.toString();
 
-        boolean over18 = Boolean.parseBoolean(Util.jsonGet("data.over18", asString));
+        boolean over18 = Boolean.parseBoolean(Util.jsonGet("data.over_18", asString));
         String mediaUrl = Util.jsonGet("data.url", asString);
 
         if (over18) {
