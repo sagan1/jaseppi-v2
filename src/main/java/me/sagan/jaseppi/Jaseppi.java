@@ -39,7 +39,7 @@ public class Jaseppi {
             e.printStackTrace();
         }
 
-        nsfw = jda.getTextChannelById(713543651128639538L);
+        nsfw = jda.getTextChannelsByName("nsfw-jaseppi", true).get(0);
 
         jda.addEventListener(new CommandHandler());
         jda.addEventListener(new RespondToTagAndPics());
