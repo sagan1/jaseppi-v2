@@ -5,6 +5,7 @@ import me.sagan.jaseppi.commands.CommandRegistry;
 import me.sagan.jaseppi.commands.functioncommands.HelpCommand;
 import me.sagan.jaseppi.commands.functioncommands.NasaCommand;
 import me.sagan.jaseppi.commands.functioncommands.RedditCommand;
+import me.sagan.jaseppi.commands.functioncommands.SayCommand;
 import me.sagan.jaseppi.commands.functioncommands.TagCommand;
 import me.sagan.jaseppi.commands.functioncommands.WeatherCommand;
 import me.sagan.jaseppi.commands.gamecommands.C4Command;
@@ -48,6 +49,7 @@ public class Jaseppi {
         CommandRegistry.register(new TagCommand());
         CommandRegistry.register(new HelpCommand());
         CommandRegistry.register(new RedditCommand());
+        CommandRegistry.register(new SayCommand());
     }
 
     public static void send(TextChannel channel, String message) {
