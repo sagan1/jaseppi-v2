@@ -43,7 +43,6 @@ public abstract class Game {
     }
 
     public void end() {
-        channel.deleteMessageById(messageId).queue();
         games.remove(this);
     }
 
