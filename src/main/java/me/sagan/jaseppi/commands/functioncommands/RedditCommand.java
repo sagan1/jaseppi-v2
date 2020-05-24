@@ -28,7 +28,7 @@ public class RedditCommand extends Command {
     private Map<String, String> authData;
 
     public RedditCommand() {
-        super("reddit", 0, 1, 0, ".reddit (subreddit)");
+        super("reddit", 0, 2, ".reddit (subreddit)");
 
         basicHeaders = new HashMap<>();
         basicHeaders.put("user-agent", "basement-bot-jaseppi by y0op");
@@ -48,12 +48,18 @@ public class RedditCommand extends Command {
         String subredditName = args.length == 0 ? "dankmemes" : args[0];
         System.out.println("subreddit name: " + subredditName);
 
+        boolean incognito = args.length == 2 && args[1].equalsIgnoreCase("incognito");
+
         for (String nonAllowedSub : nonAllowedSubs) {
             if (subredditName.contains(nonAllowedSub)) {
-                Jaseppi.send(channel, Responses.NON_ALLOWED_SUBREDDIT.getRandom());
+                if (!incognito) {
+                    Jaseppi.send(channel, Responses.NON_ALLOWED_SUBREDDIT.getRandom());
+                }
                 break;
             }
         }
+
+        message.delete().queue();
 
         String tokenAccessUrl = "https://www.reddit.com/api/v1/access_token";
 
@@ -80,7 +86,9 @@ public class RedditCommand extends Command {
         String response = Util.jsonGrab(baseUrl, headers, Collections.emptyMap());
 
         if (response == null || response.contains("error")) {
-            Jaseppi.send(channel, Responses.INVALID_SUBREDDIT.getRandom());
+            if (!incognito) {
+                Jaseppi.send(channel, Responses.INVALID_SUBREDDIT.getRandom());
+            }
             return;
         }
 
@@ -95,7 +103,9 @@ public class RedditCommand extends Command {
 
         if (over18) {
             Jaseppi.send(message.getGuild().getTextChannelById(713543651128639538L), mediaUrl);
-            Jaseppi.send(channel, Responses.NSFW_SUBREDDIT_REQUEST.getRandom());
+            if (!incognito) {
+                Jaseppi.send(channel, Responses.NSFW_SUBREDDIT_REQUEST.getRandom());
+            }
         } else {
             Jaseppi.send(channel, mediaUrl);
         }

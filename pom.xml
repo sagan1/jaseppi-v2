@@ -10,7 +10,6 @@
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <jackson.version>2.10.0</jackson.version>
-        <jraw.version>1.1.0</jraw.version>
     </properties>
 
     <build>
@@ -96,11 +95,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.dean.jraw</groupId>
-            <artifactId>JRAW</artifactId>
-            <version>${jraw.version}</version>
         </dependency>
     </dependencies>
 </project>
