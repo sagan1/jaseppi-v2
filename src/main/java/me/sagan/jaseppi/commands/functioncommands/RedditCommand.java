@@ -55,11 +55,13 @@ public class RedditCommand extends Command {
                 if (!incognito) {
                     Jaseppi.send(channel, Responses.NON_ALLOWED_SUBREDDIT.getRandom());
                 }
-                break;
+                return;
             }
         }
 
-        message.delete().queue();
+        if (incognito) {
+            message.delete().queue();
+        }
 
         String tokenAccessUrl = "https://www.reddit.com/api/v1/access_token";
 
