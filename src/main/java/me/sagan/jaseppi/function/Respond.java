@@ -35,11 +35,12 @@ public class Respond extends ListenerAdapter {
             }
         }
 
-        if (ThreadLocalRandom.current().nextDouble() > 0.8 && !msg.getContentDisplay().startsWith(Jaseppi.prefix)) {
+        if (ThreadLocalRandom.current().nextDouble() > 0.9 && !msg.getContentDisplay().startsWith(Jaseppi.prefix)) {
             StringBuilder newString = new StringBuilder();
             boolean upperCase = false;
             for (char c : event.getMessage().getContentDisplay().toLowerCase().toCharArray()) {
                 if (Character.isSpaceChar(c)) {
+                    newString.append(c);
                     continue;
                 }
 
