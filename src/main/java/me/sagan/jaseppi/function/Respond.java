@@ -39,10 +39,15 @@ public class Respond extends ListenerAdapter {
             StringBuilder newString = new StringBuilder();
             boolean upperCase = false;
             for (char c : event.getMessage().getContentDisplay().toLowerCase().toCharArray()) {
+                if (Character.isSpaceChar(c)) {
+                    continue;
+                }
+
                 if (upperCase) {
                     newString.append(Character.toUpperCase(c));
                     upperCase = false;
                 } else {
+                    newString.append(c);
                     upperCase = true;
                 }
             }
