@@ -2,6 +2,7 @@ package me.sagan.jaseppi.function;
 
 import me.sagan.jaseppi.Jaseppi;
 import me.sagan.jaseppi.Responses;
+import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -35,10 +36,16 @@ public class Respond extends ListenerAdapter {
             }
         }
 
-        if (ThreadLocalRandom.current().nextDouble() > 0.9 && !msg.getContentDisplay().startsWith(Jaseppi.prefix)) {
+        if (ThreadLocalRandom.current().nextDouble() > 0.95 && !msg.getContentDisplay().startsWith(Jaseppi.prefix)) {
+
+            String iterable = msg.getContentRaw();
+            for (Emote emote : msg.getEmotes()) {
+                iterable = iterable.replaceAll(emote.getAsMention(), "");
+            }
+
             StringBuilder newString = new StringBuilder();
             boolean upperCase = false;
-            for (char c : event.getMessage().getContentDisplay().toLowerCase().toCharArray()) {
+            for (char c : iterable.toLowerCase().toCharArray()) {
                 if (Character.isSpaceChar(c)) {
                     newString.append(c);
                     continue;
