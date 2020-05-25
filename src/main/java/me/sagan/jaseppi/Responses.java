@@ -14,7 +14,7 @@ public enum Responses {
             "i'll kill you", "stop", "suck a dick", "ima shit in your cereal if u keep talking", "suck my robo willy",
             "ima force chunky milk down your throat", "huh?", "I will boil your teeth", "ima pour cement in your ears",
             "man just leave me tf alone", "chill", "ima call god down on your ass", "stfu downy", "nice ip",
-            "forceful anal is an option in my program", "im gonna resize all your holes if you keep talking"),
+            "forceful anal is an option in my program", "im gonna resize all your holes if you keep talking", "@jAsEpPi"),
     IMAGE_VIDEO_RESPONSE("hot", "o.o", "pretty sure ive seen that before", "gonna add that to my collection",
             "uwu pweeze send some mowe", "cringe ass", "<:haHAA:633485942807724102> ", "hot shit", "nice", "ooooOOOooOO",
             "uwu whats this", "whoever sent that gettin they knees broken", "dansgame", "hot", "mhmmmm", "looks nice",

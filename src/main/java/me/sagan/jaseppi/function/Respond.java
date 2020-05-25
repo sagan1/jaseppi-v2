@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * @author cam (sagan/y0op)
  */
-public class RespondToTagAndPics extends ListenerAdapter {
+public class Respond extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
@@ -31,7 +31,23 @@ public class RespondToTagAndPics extends ListenerAdapter {
         if (msg.getAttachments().stream().anyMatch(attachment -> attachment.isImage() || attachment.isVideo())) {
             if (msg.getTextChannel().getId().equalsIgnoreCase("537425389103087636") && ThreadLocalRandom.current().nextDouble() > 0.6) {
                 Jaseppi.send(event.getChannel(), Responses.IMAGE_VIDEO_RESPONSE.getRandom());
+                return;
             }
+        }
+
+        if (ThreadLocalRandom.current().nextDouble() > 0.7) {
+            StringBuilder newString = new StringBuilder();
+            boolean upperCase = false;
+            for (char c : event.getMessage().getContentDisplay().toLowerCase().toCharArray()) {
+                if (upperCase) {
+                    newString.append(Character.toUpperCase(c));
+                    upperCase = false;
+                } else {
+                    upperCase = true;
+                }
+            }
+
+            Jaseppi.send(event.getChannel(), newString.toString());
         }
     }
 }
