@@ -35,7 +35,7 @@ public class Respond extends ListenerAdapter {
             }
         }
 
-        if (ThreadLocalRandom.current().nextDouble() > 0.7 && !msg.getContentDisplay().startsWith(Jaseppi.prefix)) {
+        if (ThreadLocalRandom.current().nextDouble() > 0.8 && !msg.getContentDisplay().startsWith(Jaseppi.prefix)) {
             StringBuilder newString = new StringBuilder();
             boolean upperCase = false;
             for (char c : event.getMessage().getContentDisplay().toLowerCase().toCharArray()) {
