@@ -30,13 +30,14 @@ public class Respond extends ListenerAdapter {
 
         // wont even run if no attachments
         if (msg.getAttachments().stream().anyMatch(attachment -> attachment.isImage() || attachment.isVideo())) {
-            if (msg.getTextChannel().getId().equalsIgnoreCase("537425389103087636") && ThreadLocalRandom.current().nextDouble() > 0.6) {
+            if (msg.getTextChannel().getId().equalsIgnoreCase("537425389103087636") &&
+                    ThreadLocalRandom.current().nextDouble() > 0.7) {
                 Jaseppi.send(event.getChannel(), Responses.IMAGE_VIDEO_RESPONSE.getRandom());
                 return;
             }
         }
 
-        if (ThreadLocalRandom.current().nextDouble() > 0.95 && !msg.getContentDisplay().startsWith(Jaseppi.prefix)) {
+        if (ThreadLocalRandom.current().nextDouble() > 0.975 && !msg.getContentDisplay().startsWith(Jaseppi.prefix)) {
 
             String iterable = msg.getContentRaw();
             for (Emote emote : msg.getEmotes()) {
