@@ -1,4 +1,4 @@
-package me.sagan.jaseppi.function;
+package me.sagan.jaseppi.functionality;
 
 import me.sagan.jaseppi.Jaseppi;
 import me.sagan.jaseppi.Responses;
